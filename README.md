@@ -9,7 +9,7 @@ Through IOC container, we can achieve
   3. injects dependencies to the class
   4. Easy to change the implementation
   5. Test driven development (TDD)
-  6, Modular
+  6. Modular
 
 In Asp.net core, IOC Container has built-in interfaces.
 
