@@ -157,15 +157,15 @@ Now, let's inject services with different life times
   
   # Example With Action Injection
   
-  public class HomeController : Controller
-  {
-    //Fromservice attribute
-    public IActionResult Index([FromService]IMyDependency service)
+    public class HomeController : Controller
     {
-        service.WriteMessage("Action level injection")
-        return View();
+      //Fromservice attribute
+      public IActionResult Index([FromService]IMyDependency service)
+      {
+          service.WriteMessage("Action level injection")
+          return View();
+      }
     }
-  }
   
   # Example With View Injection 
   
