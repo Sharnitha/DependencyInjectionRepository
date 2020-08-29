@@ -10,12 +10,10 @@ Through IOC container, we can achieve
   4. Easy to change the implementation
   5. Test driven development (TDD)
 
-IOC Container has built-in interfaces.
+In Asp.net core, IOC Container has built-in interfaces.
+
  1. IServiceProvider
  2. IServiceCollection
-
-In Asp.net core built-in container is represented by "IServiceProvider" implementation.
-
   
 The following DI Lifecycle will be  
   1. Register:- 
