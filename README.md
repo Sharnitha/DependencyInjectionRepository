@@ -71,36 +71,37 @@ lightweight, "stateless services".
 
 In the sample example, "IMyDependency" service interface defines "WriteMessage" method
 
-public interface IMyDependency
-{
-    void WriteMessage(string message);
-}
+      public interface IMyDependency
+      {
+          void WriteMessage(string message);
+      }
 
 This interface is implemented by a concrete type, MyDependency:
 
-public class MyDependency : IMyDependency
-{
-    public void WriteMessage(string message)
-    {
-        Console.WriteLine($"MyDependency.WriteMessage Message: {message}");
-    }
-}
+      public class MyDependency : IMyDependency
+      {
+          public void WriteMessage(string message)
+          {
+              Console.WriteLine($"MyDependency.WriteMessage Message: {message}");
+          }
+      }
 
 Now, Registers the "IMyDependency" service with the concrete type "MyDependency" (in startup.cs)
 
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency()));        
-    }
- 
-}
+      public class Startup
+      {
+          public void ConfigureServices(IServiceCollection services)
+          {
+              services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency()));        
+          }
+
+      }
 
 Here Add() method of "IServiceCollection" instance is used to register a service with an IoC container. The "ServiceDescriptor" is used to specify the type of service and concrete implementation. This will register our service in container with default as "Singleton"
 
 Now, let's inject services with different life times
 1. Singleton (Use case : when we need to create state service) :
+
     services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency()));//default life time is Singleton
     
                                                           or 
@@ -108,23 +109,29 @@ Now, let's inject services with different life times
     services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Singleton));
     
  2. Transisent (Use case : when we need to create stateless service):    
+ 
      services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Transient));
   
  3. Scoped  (Use case : Database service):   
+ 
       services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Scoped));
  
  When can also inject the services using bulit-in extension methods
  
  1. Singleton
+ 
        services.AddSingleton<IMyDependency, MyDependency>();
                          or
        services.AddSingleton(typeof(IMyDependency), typeof(MyDependency));      
        
   2. Transisent
+  
        services.AddTransisent<IMyDependency, MyDependency>();
                          or
        services.AddTransisent(typeof(IMyDependency), typeof(MyDependency));
+       
    3. Scoped    
+   
        services.AddScoped<IMyDependency, MyDependency>();
                          or
        services.AddScoped(typeof(IMyDependency), typeof(MyDependency)); 
@@ -172,6 +179,7 @@ Now, let's inject services with different life times
   }
   
   In Index.cshtml
+  
    @{
     ViewData["Title"] = "Home Page";
     }
