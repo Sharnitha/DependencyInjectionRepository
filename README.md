@@ -23,7 +23,7 @@ The following DI Lifecycle will be
       2. In Asp.net core, services are registered using "IServiceCollection".
       3. this services are typically registered in the app's "Startup.ConfigureServices" method.
   2. Resolve:- 
-      1. When using IOC container, we don't create objects manually, Container do for us.
+      1. When using IOC container, we don't create objects manually, Container does for us.
       2. In Asp.net core, the framework takes on the responsibility of creating an instance of the dependency with support of built-in container(IServiceProvider)
   3. Dispose:- The lifetime of object/dependecy will be taken care by IOC container only
 
