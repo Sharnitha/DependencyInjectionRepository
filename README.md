@@ -4,7 +4,7 @@ Sample Example using Asp.net core
 ASP.NET Core supports the dependency injection (DI) software design pattern, which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies.
 
 Through IoC container, we can achieve 
-  1. Loosely coupled class
+  1. Loosely coupled classes
   2. Managing lifetime of object
   3. Injects dependencies to the class
   4. Easy to change the implementation
