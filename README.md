@@ -57,7 +57,7 @@ Application Services: The services (custom types or classes) which you as a prog
 # Service Lifetime
 The built-in IOC container support three kinds of lifetime:
 1. Singleton:  
-    1. Singleton lifetime services(State service) are created the first time they're requested (or when ConfigureServices is run if you specify an instance there) and then every subsequent request will use the "same instance", through out the application lifetime
+    1. Singleton lifetime services(State service) are created the first time they're requested (or when ConfigureServices is run if you specify an instance there) and then every subsequent request will use the "same instance", throughout the application lifetime
     2. Core provides you bulit-in extension methods 
         1. Add() 
         2. AddSingleton()
@@ -202,4 +202,17 @@ Now, let's inject services with different life times
       service.WriteMessage("View level Injection");
     }
   
+# Without Injection, Get Services manually using HttpContext
+
+ public class HomeController : Controller
+  {
+   
+    public IActionResult Index()
+    {
+        var services = this.HttpContext.RequestServices;
+        var dependencyservice = (IMyDependency)services.GetService(typeof(IMyDependency));
+        dependencyservice.WriteMessage("without injection, accessing dependent services");
+        return View();
+    }
+  }
 
