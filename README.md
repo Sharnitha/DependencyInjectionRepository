@@ -183,7 +183,9 @@ Now, let's inject services with different life times
    @{
     ViewData["Title"] = "Home Page";
     }
+    
     //using Inject directive
+    
     @inject IMyDependency service
     
     //code block
