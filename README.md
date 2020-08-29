@@ -9,15 +9,22 @@ Through IOC container, we can achieve
   3. injects dependencies to the class
   4. Easy to change the implementation
   5. Test driven development (TDD)
+
+IOC Container has built-in interfaces.
+ 1. IServiceProvider
+ 2. IServiceCollection
+
+In Asp.net core built-in container is represented by "IServiceProvider" implementation.
+
   
 The following DI Lifecycle will be  
   1. Register:- 
-      1. The Container Must know which type of object/dependency should instantiate. 
-      2. In Asp.net core, services are registered using "IServiceCollection" (built in service container)
+      1. The Container must know which type of object/dependency should instantiate. 
+      2. In Asp.net core, services are registered using "IServiceCollection".
       3. this services are typically registered in the app's "Startup.ConfigureServices" method.
   2. Resolve:- 
       1. When using IOC container, we don't create objects manually, Container do for us.
-      2. In Asp.net core, the framework takes on the responsibility of creating an instance of the dependency with support of built-in container(IServiceCollection)
+      2. In Asp.net core, the framework takes on the responsibility of creating an instance of the dependency with support of built-in container(IServiceProvider)
   3. Dispose:- The lifetime of object/dependecy will be taken care by IOC container only
 
 There are basically two types of services in ASP.NET Core:
@@ -54,7 +61,7 @@ The built-in IOC container support three kinds of lifetime:
     2. Core provides you bulit-in extension methods 
         1. Add() 
         2. AddSingleton()
-2. Transisent :  
+2. Transient :  
     1. Transient lifetime services are created each time they're requested. This lifetime works best for
 lightweight, "stateless services".
     2. Core provides you bulit-in extension methods 
@@ -101,6 +108,7 @@ Now, Registers the "IMyDependency" service with the concrete type "MyDependency"
 Here Add() method of "IServiceCollection" instance is used to register a service with an IoC container. The "ServiceDescriptor" is used to specify the type of service and concrete implementation. This will register our service in container with default as "Singleton"
 
 Now, let's inject services with different life times
+
 1. Singleton (Use case : when we need to create state service) :
 
     services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency()));//default life time is Singleton
@@ -109,7 +117,7 @@ Now, let's inject services with different life times
                                                           
     services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Singleton));
     
- 2. Transisent (Use case : when we need to create stateless service):    
+ 2. Transient (Use case : when we need to create stateless service):    
  
      services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Transient));
   
@@ -117,7 +125,7 @@ Now, let's inject services with different life times
  
       services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Scoped));
  
- When can also inject the services using bulit-in extension methods
+ We can also inject the services using bulit-in extension methods
  
  1. Singleton
  
@@ -125,11 +133,11 @@ Now, let's inject services with different life times
                          or
        services.AddSingleton(typeof(IMyDependency), typeof(MyDependency));      
        
-  2. Transisent
+  2. Transient
   
        services.AddTransisent<IMyDependency, MyDependency>();
                          or
-       services.AddTransisent(typeof(IMyDependency), typeof(MyDependency));
+       services.AddTransient(typeof(IMyDependency), typeof(MyDependency));
        
    3. Scoped    
    
