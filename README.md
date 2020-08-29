@@ -3,15 +3,15 @@ Sample Example using Asp.net core
 
 ASP.NET Core supports the dependency injection (DI) software design pattern, which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies.
 
-Through IOC container, we can achieve 
-  1. loosely coupled class
+Through IoC container, we can achieve 
+  1. Loosely coupled class
   2. Managing lifetime of object
-  3. injects dependencies to the class
+  3. Injects dependencies to the class
   4. Easy to change the implementation
   5. Test driven development (TDD)
-  6. Modular
+  
 
-In Asp.net core, IOC Container has built-in interfaces.
+In Asp.net core, IoC Container has built-in interfaces.
 
  1. IServiceProvider
  2. IServiceCollection
@@ -54,7 +54,7 @@ Application Services: The services (custom types or classes) which you as a prog
   
   
 # Service Lifetime
-The built-in IOC container support three kinds of lifetime:
+The built-in IoC container support three kinds of lifetime:
 1. Singleton:  
     1. Singleton lifetime services(State service) are created the first time they're requested (or when ConfigureServices is run if you specify an instance there) and then every subsequent request will use the "same instance", throughout the application lifetime
     2. Core provides you bulit-in extension methods 
