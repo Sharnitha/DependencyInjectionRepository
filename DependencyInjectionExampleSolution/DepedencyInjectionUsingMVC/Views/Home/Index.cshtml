@@ -2,6 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 
+@*@inject DepedencyInjectionUsingMVC.Service.IMyDependency depservice
+
+
+@{ 
+    depservice.WriteMessage("this is from view using view level dependency injection");
+}*@
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DepedencyInjectionUsingMVC.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,10 @@ namespace DepedencyInjectionUsingMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+           // services.Add(new ServiceDescriptor(typeof(IMyDependency), typeof(LoggerDependencyService),ServiceLifetime.Singleton));
+
+            services.AddSingleton<IMyDependency, LoggerDependencyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
