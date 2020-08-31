@@ -22,7 +22,7 @@ The following DI Lifecycle will be
       2. In Asp.net core, services are registered using "IServiceCollection".
       3. this services are typically registered in the app's "Startup.ConfigureServices" method.
   2. Resolve:- 
-      1. When using IOC container, we don't create objects manually, Container does for us.
+      1. When using IoC container, we don't create objects manually, Container does for us.
       2. In Asp.net core, the framework takes on the responsibility of creating an instance of the dependency with support of built-in container(IServiceProvider)
   3. Dispose:- The lifetime of object/dependecy will be taken care by IOC container only
 
@@ -58,7 +58,7 @@ The built-in IoC container support three kinds of lifetime:
 1. Singleton:  
     1. Singleton lifetime services(State service) are created the first time they're requested (or when ConfigureServices is run if you specify an instance there) and then every subsequent request will use the "same instance", throughout the application lifetime
     2. Core provides you bulit-in extension methods 
-        1. Add() 
+        1. Add() (ServiceLifetime.Singleton)
         2. AddSingleton()
 2. Transient :  
     1. Transient lifetime services are created each time they're requested. This lifetime works best for
