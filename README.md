@@ -110,11 +110,8 @@ Now, let's inject services with different life times
 
 1. Singleton (Use case : when we need to create state service) :
 
-    services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency()));//default life time is Singleton
-    
-                                                          or 
-                                                          
     services.Add(new ServiceDescriptor(typeof(IMyDependency), new MyDependency(),ServiceLifetime.Singleton));
+    
     
  2. Transient (Use case : when we need to create stateless service):    
  
