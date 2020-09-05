@@ -2,6 +2,7 @@
 Sample Example using Asp.net core 
 
 Recorded Video Link: https://drive.google.com/file/d/1VjPm72ifITjdYdOpo7TFDUuggLG5mXDT/view?usp=sharing
+OverviewOfDI: https://github.com/sandeepmvn/DependencyInjectionRepository/blob/master/OverviewOfDI.txt
 
 ASP.NET Core supports the dependency injection (DI) software design pattern, which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies.
 
