@@ -1,6 +1,5 @@
 A dependency is an object that another object depends on. Examine the following MyDependency class with a WriteMessage method that other classes depend on:
 
-
     public class MyDependency
     {
         public void WriteMessage(string message)
@@ -8,6 +7,7 @@ A dependency is an object that another object depends on. Examine the followin
             Console.WriteLine($"MyDependency.WriteMessage called. Message: {message}");
         }
     }
+    
 
 A class can create an instance of the MyDependency class to make use of its WriteMessage method. In the following example, the MyDependency class is a dependency of the IndexModel class:
 
@@ -20,6 +20,7 @@ A class can create an instance of the MyDependency class to make use of its W
             _dependency.WriteMessage("IndexModel.OnGet created this message.");
         }
     }
+    
 
 The class creates and directly depends on the MyDependency class. Code dependencies, such as in the previous example, are problematic and should be avoided for the following reasons:
 	• To replace MyDependency with a different implementation, the IndexModel class must be modified.
