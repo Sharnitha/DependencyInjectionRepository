@@ -1,7 +1,7 @@
 # Dependency Injection
 Sample Example using Asp.net core 
 
-Recorded Video Link: https://drive.google.com/file/d/1VjPm72ifITjdYdOpo7TFDUuggLG5mXDT/view?usp=sharing
+Recorded Video Link: https://www.youtube.com/watch?v=oVj1IHw8GLU
 
 OverviewOfDI: https://github.com/sandeepmvn/DependencyInjectionRepository/blob/master/OverviewOfDI.txt
 
