@@ -3,12 +3,12 @@
 name: Full_CI
 
 on:
-  push:
-    branches:
-    - master
+  # push:
+  #   branches:
+  #   - master
   workflow_dispatch:
 jobs:
-  Dotnet_Functions:
+  Dotnet:
     runs-on: ubuntu-latest
     steps:
     - name: Remove Previous Dotnet Version
@@ -36,3 +36,14 @@ jobs:
       with:
         name: dotnet_artifacts
         path: DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/app/publish
+  Docker_Build:
+    runs-on: ubuntu-latest
+    needs: Dotnet
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Docker build using Dockerfile
+        run: |
+          gh run download ${{ github.run_id }}
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
+    
