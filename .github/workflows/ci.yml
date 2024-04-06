@@ -26,8 +26,8 @@ jobs:
     - name: Restoring Dependencies
       run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet restore
     - name: Building Dotnet
-      run: dotnet build -c release
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build -c release
     - name: Dotnet Publish
-      run: dotnet publish -c release
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release
     - name: Listing repo in release
-      run: ls
+      run: ls release/ 
