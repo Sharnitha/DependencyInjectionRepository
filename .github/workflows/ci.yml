@@ -50,5 +50,5 @@ jobs:
         run: |
           cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
           gh run download ${{ github.run_id }}
-          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} ./DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
     
