@@ -28,6 +28,6 @@ jobs:
     - name: Building Dotnet
       run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build -c release
     - name: Dotnet Publish
-      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release -o /app/publish
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release -o app/publish
     - name: Listing repo in release
       run: ls /app/publish
