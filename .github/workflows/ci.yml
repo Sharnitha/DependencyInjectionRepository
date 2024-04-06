@@ -49,7 +49,5 @@ jobs:
       - name: Docker build using Dockerfile
         run: |
           gh run download ${{ github.run_id }}
-          pwd
-          ls
-          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} /home/runner/work/DependencyInjectionRepository/DependencyInjectionRepository/DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/Dockerfile
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} ./DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/Dockerfile
     
