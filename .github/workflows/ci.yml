@@ -31,3 +31,8 @@ jobs:
       run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release -o app/publish
     - name: Listing repo in release
       run: ls DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/app/publish
+    - name: UploadArtifact
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: dotnet_artifacts
+        path: DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/app/publish
