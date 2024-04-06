@@ -3,9 +3,9 @@
 name: Full_CI
 
 on:
-  # push:
-  #   branches:
-  #   - master
+  push:
+    branches:
+    - master
   workflow_dispatch:
   
 env:
@@ -49,5 +49,7 @@ jobs:
       - name: Docker build using Dockerfile
         run: |
           gh run download ${{ github.run_id }}
-          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/Dockerfile
+          pwd
+          ls
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} /DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/Dockerfile
     
