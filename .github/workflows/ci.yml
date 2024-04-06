@@ -30,4 +30,4 @@ jobs:
     - name: Dotnet Publish
       run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release -o app/publish
     - name: Listing repo in release
-      run: ls app/publish
+      run: ls app/publish/
