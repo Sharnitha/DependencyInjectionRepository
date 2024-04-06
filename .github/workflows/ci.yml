@@ -1,0 +1,35 @@
+# DependencyInjectionExampleSolution
+# /DepedencyInjectionUsingMVC
+name: Full_CI
+
+on:
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+jobs:
+  Dotnet_Functions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove Previous Dotnet Version
+      run : |
+        cd /usr/share/dotnet/
+        rm -rf *
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 3.1.426  
+    - name: Switching directory
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
+    - name: Listing Dotnet version
+      run: dotnet --version
+    - name: Restoring Dependencies
+      run: dotnet restore
+    - name: Building Dotnet
+      run: dotnet build -c release
+    - name: Dotnet Publish
+      run: dotnet publish -c release
+    - name: Listing repo in release
+      run: ls
