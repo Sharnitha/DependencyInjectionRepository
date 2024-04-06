@@ -1,0 +1,43 @@
+name: Full_CI
+
+on:
+ workflow_call:
+
+# on:
+#   push:
+#     branches:
+#     - master
+#   workflow_dispatch:
+  
+# env:
+#   GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
+    
+jobs:
+  Dotnet:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove Previous Dotnet Version
+      run : |
+        cd /usr/share/dotnet/
+        rm -rf *
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ secrets.DOTNET_VERSION }}
+    - name: Listing Dotnet version
+      run: dotnet --version
+    - name: Restoring Dependencies
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet restore
+    - name: Building Dotnet
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build -c release
+    - name: Dotnet Publish
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet publish -c release -o app/publish
+    - name: Listing repo in release
+      run: ls DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/app/publish
+    - name: UploadArtifact
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: dotnet_artifacts
+        path: DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/app/publish
