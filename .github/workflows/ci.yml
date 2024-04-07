@@ -28,19 +28,26 @@ jobs:
           gh run download ${{ github.run_id }}
           docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
       - name: UploadArtifact_Docker_image
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: Docker_Image
           path: .
-          
-        
-      # - name: Aqua Security Trivy
-      #   uses: aquasecurity/trivy-action@0.18.0
-      #   with:   
-      #     exit-code: 0
-      #     severity: MEDIUM,HIGH,CRITICAL
-      #     format: table
-      #     image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+
+  trivy_scan:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Download build image
+        uses: actions/download-artifact@v4
+        with:
+          name: Docker_Image
+          path: .
+      - name: Aqua Security Trivy
+        uses: aquasecurity/trivy-action@0.18.0
+        with:   
+          exit-code: 0
+          severity: MEDIUM,HIGH,CRITICAL
+          format: table
+          image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
       # - name: Aqua Trivy scan report
       #   run: |
       #     wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
