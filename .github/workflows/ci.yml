@@ -3,9 +3,9 @@
 name: CI
 
 on:
-  # push:
-  #   branches:
-  #   - master
+  push:
+    branches:
+    - master
   workflow_dispatch:
 
 env:
@@ -35,6 +35,7 @@ jobs:
 
   trivy_scan:
     runs-on: ubuntu-latest
+    needs: Docker_Build
     steps: 
       - name: Download build image
         uses: actions/download-artifact@v4
