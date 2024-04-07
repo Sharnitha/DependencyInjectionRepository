@@ -48,13 +48,14 @@ jobs:
       - name: Set PATH for SonarScanner
         run: |
           echo "##[set-env name=PATH;]${{ github.workspace }}\.sonar\scanner"
+      - name: changing directory
+        run: cd .\DependencyInjectionExampleSolution\DepedencyInjectionUsingMVC
 
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         shell: powershell
         run: |
-          .\DependencyInjectionExampleSolution\DepedencyInjectionUsingMVC
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"dotnet" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
