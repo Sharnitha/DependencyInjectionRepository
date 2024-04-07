@@ -21,7 +21,7 @@ jobs:
     # needs: Dotnet
     steps:
       - name: checkout direct/files
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: change directory 
         run: cd DependencyInjectionExampleSolution\DepedencyInjectionUsingMVC
       - name: check files and dir
