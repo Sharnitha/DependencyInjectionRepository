@@ -20,9 +20,8 @@ jobs:
     runs-on: windows-latest
     # needs: Dotnet
     steps:
+      - name: checkout direct/files
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  
       - name: change directory 
         run: cd DependencyInjectionExampleSolution\DepedencyInjectionUsingMVC
       - name: check files and dir
