@@ -27,21 +27,18 @@ jobs:
           cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
           gh run download ${{ github.run_id }}
           docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
-      - name: UploadArtifact_Docker_image
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docker_Image
-          path: .
+      - name: Docker_Login
+        run: docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
+      - name: Docker_Push
+        run: docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }} 
+ 
 
-  trivy_scan:
+  Aqua_Trivy:
     runs-on: ubuntu-latest
     needs: Docker_Build
-    steps: 
-      - name: Download build image
-        uses: actions/download-artifact@v4
-        with:
-          name: Docker_Image
-          path: .
+    steps:
+      - name: PUll image from ACR
+        run: docker pull githubcipractice.azurecr.io/demoenv:${{ github.run_id }} 
       - name: Aqua Security Trivy
         uses: aquasecurity/trivy-action@0.18.0
         with:   
@@ -49,25 +46,6 @@ jobs:
           severity: MEDIUM,HIGH,CRITICAL
           format: table
           image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
-      # - name: Aqua Trivy scan report
-      #   run: |
-      #     wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
-      #     sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
-      #     touch trivyresults.txt
-      #     # trivy image -f json -o trivyfijs.json githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
-      #     trivy image -f table -o trivyresults.txt githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
-
-  # Aqua_Trivy:
-  #   runs-on: ubuntu-latest
-  #   needs: Docker_Build
-  #   steps:
-  #     - name: Aqua Security Trivy
-  #       uses: aquasecurity/trivy-action@0.18.0
-  #       with:   
-  #         exit-code: 0
-  #         severity: MEDIUM,HIGH,CRITICAL
-  #         format: table
-  #         image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
           
   # Aqua_Trivy_report:
   #   runs-on: ubuntu-latest
