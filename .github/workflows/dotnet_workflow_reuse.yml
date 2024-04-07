@@ -3,6 +3,9 @@ name: Full_CI
 on:
  workflow_call:
 
+env:
+    GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
+    
 # on:
 #   push:
 #     branches:
