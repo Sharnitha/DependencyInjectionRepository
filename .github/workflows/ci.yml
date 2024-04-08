@@ -22,10 +22,10 @@ jobs:
     steps:
       - name: checkout direct/files
         uses: actions/checkout@v4
-      # - name: Remove Previous Dotnet Version
-      #   run : |
-      #     cd /usr/share/dotnet/
-      #     rm -rf *
+      - name: Remove Previous Dotnet Version
+        shell: powershell
+        run: |
+          Remove-Item -Path "C:\Program Files\dotnet\*" -Recurse -Force
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup .NET Core SDK
