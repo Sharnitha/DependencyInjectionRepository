@@ -29,24 +29,32 @@ jobs:
       with:
         dotnet-version: 3.1.426
         
-    - name: Azure CLI
-      run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
+    # - name: Azure CLI
+    #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
-    - uses: Azure/get-keyvault-secrets@v1
-      with:
-        keyvault: "Sharnikeyvault"
-        secrets: 'mySecret1, mySecret2'
-      id: myGetSecretAction
-      
+    # - uses: Azure/get-keyvault-secrets@v1
+    #   with:
+    #     keyvault: "Sharnikeyvault"
+    #     secrets: 'mySecret1, mySecret2'
+    #   id: myGetSecretAction
+
+
     - uses: sonarsource/sonarqube-scan-action@master
       env:
-        # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
-        SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
-        SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
-        # SONAR_HOST_URL: "http://20.84.62.68:9000"
+        env-file: ./secrets.env
       with:
        args: >
          -Dsonar.projectKey=dotnet
+         
+    # - uses: sonarsource/sonarqube-scan-action@master
+    #   env:
+    #     # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
+    #     SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
+    #     SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
+    #     # SONAR_HOST_URL: "http://20.84.62.68:9000"
+    #   with:
+    #    args: >
+    #      -Dsonar.projectKey=dotnet
     
         
   Docker_Login:
