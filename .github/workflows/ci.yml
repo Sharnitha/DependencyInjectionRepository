@@ -3,9 +3,9 @@
 name: CI
 
 on:
-  push:
-    branches:
-    - master
+  # push:
+  #   branches:
+  #   - master
   workflow_dispatch:
 
 env:
@@ -28,6 +28,14 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 3.1.426
+    - name: Login in Azure portal via CLI
+      run: docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - uses: Azure/get-keyvault-secrets@v1
+      with:
+        keyvault: "myKeyVault"
+        secrets: 'mySecret1'
+      id: myGetSecretAction
       
     - uses: sonarsource/sonarqube-scan-action@master
       env:
