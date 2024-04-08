@@ -33,7 +33,9 @@ jobs:
       env:
         SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede"
         SONAR_HOST_URL: "http://20.84.62.68:9000"
-            
+      with:
+       args: >
+         -Dsonar.projectKey=dotnet
     
         
   Docker_Login:
