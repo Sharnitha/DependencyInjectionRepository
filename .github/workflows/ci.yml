@@ -18,11 +18,13 @@ jobs:
   ManualSonar:
     runs-on: Ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Docker build using Dockerfile
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"dotnet" /d:sonar.host.url="http://20.84.62.68:9000"  /d:sonar.login="sqp_3fd8f19639f66b80eb72de8251e870726becdede"
-         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build
+        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build
         dotnet sonarscanner end /d:sonar.login="sqp_3fd8f19639f66b80eb72de8251e870726becdede"
         
     
