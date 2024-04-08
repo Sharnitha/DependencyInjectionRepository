@@ -38,16 +38,27 @@ jobs:
         keyvault: "Sharnikeyvault"
         secrets: 'mySecret1, mySecret2'
       id: myGetSecretAction
-         
+
+    - name: Create environment file
+      run: |
+        echo "SONAR_TOKEN=${{ steps.myGetSecretAction.outputs.mySecret1 }}" >> $GITHUB_ENV
+        echo "SONAR_HOST_URL=${{ steps.myGetSecretAction.outputs.mySecret2 }}" >> $GITHUB_ENV
+        
     - uses: sonarsource/sonarqube-scan-action@master
       env:
-        # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
-        SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
-        SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
-        # SONAR_HOST_URL: "http://20.84.62.68:9000"
+        SONAR_TOKEN_FILE: ${{ github.workspace }}/.env
       with:
-       args: >
-         -Dsonar.projectKey=dotnet
+        args: >
+          -Dsonar.projectKey=dotnet
+    # - uses: sonarsource/sonarqube-scan-action@master
+    #   env:
+    #     # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
+    #     SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
+    #     SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
+    #     # SONAR_HOST_URL: "http://20.84.62.68:9000"
+    #   with:
+    #    args: >
+    #      -Dsonar.projectKey=dotnet
     
         
   Docker_Login:
