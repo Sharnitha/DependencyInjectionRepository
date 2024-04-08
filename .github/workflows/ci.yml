@@ -37,7 +37,8 @@ jobs:
     #     keyvault: "Sharnikeyvault"
     #     secrets: 'mySecret1, mySecret2'
     #   id: myGetSecretAction
-
+    - name: listing files
+      run: ls
 
     - uses: sonarsource/sonarqube-scan-action@master
       env:
