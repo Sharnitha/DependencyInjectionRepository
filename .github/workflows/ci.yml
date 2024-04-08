@@ -3,17 +3,17 @@
 name: CI
 
 on:
-  # push:
-  #   branches:
-  #   - master
+  push:
+    branches:
+    - master
   workflow_dispatch:
 
 env:
     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
   
 jobs:
-  # Dotnet:
-  #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
+  Dotnet:
+    uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
   ManualSonar:
     runs-on: Ubuntu-latest
@@ -28,6 +28,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 3.1.426
+        
     - name: Login in Azure portal via CLI
       run: docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
 
