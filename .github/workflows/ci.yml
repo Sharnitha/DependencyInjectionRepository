@@ -33,14 +33,16 @@ jobs:
 
     - uses: Azure/get-keyvault-secrets@v1
       with:
-        keyvault: "myKeyVault"
-        secrets: 'mySecret1'
+        keyvault: "Sharnikeyvault"
+        secrets: 'mySecret1, mySecret2'
       id: myGetSecretAction
       
     - uses: sonarsource/sonarqube-scan-action@master
       env:
-        SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede"
-        SONAR_HOST_URL: "http://20.84.62.68:9000"
+        # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
+        SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
+        SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
+        # SONAR_HOST_URL: "http://20.84.62.68:9000"
       with:
        args: >
          -Dsonar.projectKey=dotnet
