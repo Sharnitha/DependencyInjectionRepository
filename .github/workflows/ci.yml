@@ -28,20 +28,11 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 3.1.426
-    # - name: Docker build using Dockerfile
-    #   run: |
-    #     dotnet tool install --global dotnet-sonarscanner 
-    #     dotnet sonarscanner begin /k:"dotnet" /d:sonar.host.url="http://20.84.62.68:9000"  /d:sonar.login="sqp_3fd8f19639f66b80eb72de8251e870726becdede"
-    #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && dotnet build
-    #     dotnet sonarscanner end /d:sonar.login="sqp_3fd8f19639f66b80eb72de8251e870726becdede"
-    - name: SonarQube Scan (begin)
+      
+    - uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede"
         SONAR_HOST_URL: "http://20.84.62.68:9000"
-      run: |
-        ./.sonar/sonar-scanner/bin/sonar-scanner \
-          -Dsonar.login="${SONAR_TOKEN}" \
-          -Dsonar.host.url="${SONAR_HOST_URL}"
             
     
         
