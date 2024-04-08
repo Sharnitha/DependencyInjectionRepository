@@ -46,7 +46,7 @@ jobs:
         
     - uses: sonarsource/sonarqube-scan-action@master
       env:
-        SONAR_TOKEN_FILE: ${{ github.workspace }}/.env
+        SONAR_TOKEN_FILE: ${{ github.workspace }}/secrets.env
       with:
         args: >
           -Dsonar.projectKey=dotnet
