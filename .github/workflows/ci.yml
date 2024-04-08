@@ -42,8 +42,8 @@ jobs:
     - uses: sonarsource/sonarqube-scan-action@master
       env:
         # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
-        SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}
-        SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}
+        echo "SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret1 }}" >> $GITHUB_ENV
+        echo "SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret2 }}" >> $GITHUB_ENV
         # SONAR_HOST_URL: "http://20.84.62.68:9000"
       with:
        args: >
