@@ -29,8 +29,8 @@ jobs:
       with:
         dotnet-version: 3.1.426
         
-    - name: Login in Azure portal via CLI
-      run: docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Azure CLI
+      run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
     - uses: Azure/get-keyvault-secrets@v1
       with:
