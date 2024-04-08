@@ -20,6 +20,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 3.1.426
     - name: Docker build using Dockerfile
       run: |
         dotnet tool install --global dotnet-sonarscanner
