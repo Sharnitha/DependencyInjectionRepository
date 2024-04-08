@@ -40,9 +40,8 @@ jobs:
     
     - name: permission env file
       run: |
-        chmod 744 secrets.env 
-        source ./secrets.env
-   
+        chmod 777 secrets.env 
+      
     - uses: sonarsource/sonarqube-scan-action@master
       env:
         env-file: ./secrets.env
