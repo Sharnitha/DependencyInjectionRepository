@@ -39,10 +39,10 @@ jobs:
         secrets: 'mySecret1, mySecret2'
       id: myGetSecretAction
 
-    - name: Create environment file
-      run: |
-        echo "SONAR_TOKEN=${{ steps.myGetSecretAction.outputs.mySecret1 }}" >> $GITHUB_ENV
-        echo "SONAR_HOST_URL=${{ steps.myGetSecretAction.outputs.mySecret2 }}" >> $GITHUB_ENV
+    # - name: Create environment file
+    #   run: |
+    #     echo "SONAR_TOKEN=${{ steps.myGetSecretAction.outputs.mySecret1 }}" >> $GITHUB_ENV
+    #     echo "SONAR_HOST_URL=${{ steps.myGetSecretAction.outputs.mySecret2 }}" >> $GITHUB_ENV
         
     - uses: sonarsource/sonarqube-scan-action@master
       env:
