@@ -5,7 +5,7 @@ RUN mkdir /app
 RUN groupadd -g 1001 myuser && \
     useradd -r -u 1001 -g myuser myuser
     
-RUN echo "Setting permission'
+RUN echo "Setting permission"
 # Set permissions for the application directory
 RUN chown -R myuser:myuser /app
 
