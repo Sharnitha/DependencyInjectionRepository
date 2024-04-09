@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 
-RUN mkdir /app
+# RUN mkdir /app
 # Create a non-root user
 RUN groupadd -g 1001 myuser && \
     useradd -r -u 1001 -g myuser myuser
