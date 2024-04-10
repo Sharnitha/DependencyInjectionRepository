@@ -17,7 +17,7 @@ ARG artifact=dotnet_artifacts/*
 COPY ${artifact} .
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 5000
 
 # Switch to the non-root user
 USER myuser
