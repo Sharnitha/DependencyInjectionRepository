@@ -23,4 +23,4 @@ EXPOSE 5000
 USER myuser
 
 # Set the entry point for your application
-ENTRYPOINT ["dotnet", "Depend.dll"]
+ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
