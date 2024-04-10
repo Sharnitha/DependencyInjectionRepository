@@ -21,6 +21,8 @@
               username: ${{ secrets.DOCKER_LOGIN }} 
               password: ${{ secrets.DOCKER_PASSWORD }} 
               ecr: false
+          - name: Azure CLI
+            run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
           - name: aks-set 
             uses: azure/aks-set-context@v3
             with:
