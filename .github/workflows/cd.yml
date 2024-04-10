@@ -23,12 +23,8 @@
               ecr: false
           - name: Azure CLI
             run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
-          - name: aks-set 
-            uses: azure/aks-set-context@v3
-            with:
-             resource-group: 'sharnitha-poc'
-             cluster-name: 'praceks'
-      
+          - name: aks context
+            run: az aks get-credentials --resource-group sharnitha-poc --name pracdemoeks --overwrite-existing
         # Create K8s secrets to pull images
           - name: Create secret in Kubernetes cluster
             uses: Azure/k8s-create-secret@v1.1
