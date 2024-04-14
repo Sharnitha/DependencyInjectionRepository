@@ -23,7 +23,7 @@ jobs:
     - name: Listing Dotnet version
       run: dotnet --version
     - name: Change Directory
-      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
+      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
     - name: Dotnet restore
       run: dotnet restore
     - name: Building Dotnet
