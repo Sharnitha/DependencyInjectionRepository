@@ -35,5 +35,5 @@ WORKDIR /src
 RUN useradd -u 8765 non-root && chown -R non-root /tmp
 USER non-root
 EXPOSE 5000
-COPY --from=build /src/publish .
+COPY --from=build /tmp/publish .
 ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
