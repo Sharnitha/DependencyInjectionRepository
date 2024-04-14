@@ -8,8 +8,8 @@ on:
     - feature
   workflow_dispatch:
 
-env:
-    GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
+# env:
+#     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
   
 jobs:
   Dotnet:
@@ -71,8 +71,10 @@ jobs:
       - name: Docker build using Dockerfile
         run: |
           cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-          gh run download ${{ github.run_id }}
           docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
+          docker images
+       # gh run download ${{ github.run_id }}
+         
       - name: Aqua Security Trivy
         uses: aquasecurity/trivy-action@0.18.0
         with:   
