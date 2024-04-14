@@ -24,7 +24,7 @@
 
 # # Set the entry point for your application
 # ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
-
+ # Testing the functionality
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY . /src
