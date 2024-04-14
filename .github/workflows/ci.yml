@@ -50,39 +50,39 @@ jobs:
   #        -Dsonar.projectKey=dotnet
     
         
-  # Docker_Login:
-  #   runs-on: ubuntu-latest
-  #   needs: Dotnet
-  #   steps:
-  #     - name: Docker Login to ACR
-  #       uses: docker/login-action@v3.1.0
-  #       with:
-  #         registry: githubcipractice.azurecr.io
-  #         username: ${{ secrets.DOCKER_LOGIN }} 
-  #         password: ${{ secrets.DOCKER_PASSWORD }} 
-  #         ecr: false
+  Docker_Login:
+    runs-on: ubuntu-latest
+    needs: Dotnet
+    steps:
+      - name: Docker Login to ACR
+        uses: docker/login-action@v3.1.0
+        with:
+          registry: githubcipractice.azurecr.io
+          username: ${{ secrets.DOCKER_LOGIN }} 
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          ecr: false
  
-  # Docker_Build:
-  #   runs-on: ubuntu-latest
-  #   needs: Docker_Login
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Docker build using Dockerfile
-  #       run: |
-  #         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-  #         gh run download ${{ github.run_id }}
-  #         docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
-  #     - name: Aqua Security Trivy
-  #       uses: aquasecurity/trivy-action@0.18.0
-  #       with:   
-  #         exit-code: 0
-  #         severity: MEDIUM,HIGH,CRITICAL
-  #         format: table
-  #         image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
-  #     - name: Docker build using Dockerfile
-  #       run: |
-  #         docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
-  #         docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
-  #         docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+  Docker_Build:
+    runs-on: ubuntu-latest
+    needs: Docker_Login
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Docker build using Dockerfile
+        run: |
+          cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+          gh run download ${{ github.run_id }}
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
+      - name: Aqua Security Trivy
+        uses: aquasecurity/trivy-action@0.18.0
+        with:   
+          exit-code: 0
+          severity: MEDIUM,HIGH,CRITICAL
+          format: table
+          image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+      - name: Docker build using Dockerfile
+        run: |
+          docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+          docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
 
