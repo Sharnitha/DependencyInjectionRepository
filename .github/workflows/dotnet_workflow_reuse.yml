@@ -22,12 +22,12 @@ jobs:
         dotnet-version: 3.1.426
     - name: Listing Dotnet version
       run: dotnet --version
-    - name: Change Directory
-      run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
+    # - name: Change Directory
+    #   run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
     - name: Dotnet restore
-      run: dotnet restore
+      run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
     - name: Building Dotnet
-      run: dotnet build -c release
+      run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release 
     - name: listing dir and files
       run: ls
     
