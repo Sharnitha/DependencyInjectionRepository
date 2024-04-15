@@ -10,10 +10,10 @@ jobs:
   Dotnet_Task:
     runs-on: ubuntu-latest
     steps:
-    - name: Remove Previous Dotnet Version
-      run : |
-        cd /usr/share/dotnet/
-        rm -rf *
+    # - name: Remove Previous Dotnet Version
+    #   run : |
+    #     cd /usr/share/dotnet/
+    #     rm -rf *
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Setup .NET Core SDK
