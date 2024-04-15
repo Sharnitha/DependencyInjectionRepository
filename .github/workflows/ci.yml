@@ -7,8 +7,8 @@ on:
   push:
     branches:
     - feature
-    paths:
-    - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
+    # paths:
+    # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
 # env:
 #     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
