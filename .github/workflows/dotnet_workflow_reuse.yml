@@ -27,7 +27,9 @@ jobs:
     - name: Dotnet restore
       run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
     - name: Building Dotnet
-      run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release 
+      run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+    # - name: Building Dotnet
+    #   run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release 
     - name: listing dir and files
       run: ls
     
