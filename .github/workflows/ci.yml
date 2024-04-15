@@ -3,10 +3,10 @@
 name: CI
 
 on:
-  # workflow_dispatch:
-  push:
-    branches:
-    - feature
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #   - feature
     # paths:
     # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
