@@ -31,8 +31,10 @@ COPY . /src
 RUN dotnet publish "DepedencyInjectionUsingMVC.csproj" -c release -o /tmp/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
-WORKDIR /src
-RUN useradd -u 8765 non-root && chown -R non-root /tmp
+WORKDIR /app
+# RUN useradd -u 8765 non-root && chown -R non-root /tmp
+RUN adduser --disabled-password --gecos '' non-root && \
+    chown -R non-root /app
 USER non-root
 EXPOSE 5000
 COPY --from=build /tmp/publish .
