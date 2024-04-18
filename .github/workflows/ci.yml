@@ -52,21 +52,21 @@ jobs:
   #        -Dsonar.projectKey=dotnet
     
         
-  Docker_Login:
-    runs-on: ubuntu-latest
-    needs: Dotnet
-    steps:
-      - name: Docker Login to ACR
-        uses: docker/login-action@v3.1.0
-        with:
-          registry: githubcipractice.azurecr.io
-          username: ${{ secrets.DOCKER_LOGIN }} 
-          password: ${{ secrets.DOCKER_PASSWORD }} 
-          ecr: false
+  # Docker_Login:
+  #   runs-on: ubuntu-latest
+  #   needs: Dotnet
+  #   steps:
+  #     - name: Docker Login to ACR
+  #       uses: docker/login-action@v3.1.0
+  #       with:
+  #         registry: githubcipractice.azurecr.io
+  #         username: ${{ secrets.DOCKER_LOGIN }} 
+  #         password: ${{ secrets.DOCKER_PASSWORD }} 
+  #         ecr: false
  
   Docker_Build:
     runs-on: ubuntu-latest
-    needs: Docker_Login
+    needs: Dotnet
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
