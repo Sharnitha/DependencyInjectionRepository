@@ -29,6 +29,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY  . . 
+RUN ls
 RUN dotnet publish "DepedencyInjectionUsingMVC.csproj" -c release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
