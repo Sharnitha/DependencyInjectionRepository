@@ -28,10 +28,14 @@ jobs:
       run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
     - name: Building Dotnet
       run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+    - name: Publish Dotnet
+      run: dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
     # - name: Building Dotnet
     #   run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release 
     - name: listing dir and files
-      run: ls
+      run: |
+        cd app/publish
+        ls
     
 # jobs:
 #   Dotnet_Task:
