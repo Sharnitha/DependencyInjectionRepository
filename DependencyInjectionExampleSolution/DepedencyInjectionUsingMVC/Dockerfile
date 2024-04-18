@@ -25,11 +25,11 @@
 # # Set the entry point for your application
 # ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
  # Testing the functionality
+
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY . /src
-RUN dotnet publish "DepedencyInjectionUsingMVC.csproj" -c release -o /tmp/publish
-
+RUN dotnet publish "DepedencyInjectionUsingMVC.csproj" -c release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
 # RUN useradd -u 8765 non-root && chown -R non-root /tmp
@@ -37,5 +37,5 @@ RUN adduser --disabled-password --gecos '' non-root && \
     chown -R non-root /app
 USER non-root
 EXPOSE 5000
-COPY --from=build /tmp/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
