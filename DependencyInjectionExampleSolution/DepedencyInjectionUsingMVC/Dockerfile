@@ -28,9 +28,10 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY  . . 
+RUN cd ./DependencyInjectionRepository
+# COPY  . . 
 RUN ls
-RUN dotnet publish "DepedencyInjectionUsingMVC.csproj" -c release -o /app/publish
+RUN dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
 # RUN useradd -u 8765 non-root && chown -R non-root /tmp
