@@ -28,7 +28,7 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-RUN cd ./DependencyInjectionRepository
+RUN cd ../..
 # COPY  . . 
 RUN ls
 RUN dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
