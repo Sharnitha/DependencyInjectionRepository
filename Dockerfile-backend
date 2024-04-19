@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /DependencyInjectionRepository
+WORKDIR /src
+COPY . /src
 RUN ls
 RUN dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
