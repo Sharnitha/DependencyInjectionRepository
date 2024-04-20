@@ -17,12 +17,12 @@ jobs:
   # Dotnet:
   #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
-  # ManualSonar:
-  #   runs-on: Ubuntu-latest
+  ManualSonar:
+    runs-on: Ubuntu-latest
   #   needs: Dotnet
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
   #   - name: Remove Previous Dotnet Version
   #     run : |
   #       cd /usr/share/dotnet/
@@ -35,21 +35,21 @@ jobs:
   #   - name: Azure CLI
   #     run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
-  #   - uses: Azure/get-keyvault-secrets@v1
-  #     with:
-  #       keyvault: "Sharnikeyvault"
-  #       secrets: 'mySecret3, mySecret4'
-  #     id: myGetSecretAction
+    # - uses: Azure/get-keyvault-secrets@v1
+    #   with:
+    #     keyvault: "Sharnikeyvault"
+    #     secrets: 'mySecret3, mySecret4'
+    #   id: myGetSecretAction
    
-  #   - uses: sonarsource/sonarqube-scan-action@master
-  #     env:
-  #       # SONAR_TOKEN: "sqp_3fd8f19639f66b80eb72de8251e870726becdede" ${{ steps.Sharnikeyvault.outputs.mySecret1 }}
-  #       SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret3 }}
-  #       SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret4 }}
-  #       # SONAR_HOST_URL: "http://20.84.62.68:9000"
-  #     with:
-  #      args: >
-  #        -Dsonar.projectKey=dotnet
+    - uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: "squ_33fc07c997a708b5beae2d6d3201ae4fa6a45e97" 
+        SONAR_HOST_URL: "http://20.115.87.78:9090"
+        # SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret3 }}
+        # SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret4 }}
+      with:
+       args: >
+         -Dsonar.projectKey=dotnet
     
         
   # Docker_Login:
@@ -64,17 +64,17 @@ jobs:
   #         password: ${{ secrets.DOCKER_PASSWORD }} 
   #         ecr: false
 
-   Docker_Build:
-    runs-on: ubuntu-latest
-    # needs: Dotnet
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Docker build using Dockerfile
-        run: |
-          cd DependencyInjectionExampleSolution
-          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
-          docker images
+   # Docker_Build:
+   #  runs-on: ubuntu-latest
+   #  # needs: Dotnet
+   #  steps:
+   #    - name: Checkout code
+   #      uses: actions/checkout@v4
+   #    - name: Docker build using Dockerfile
+   #      run: |
+   #        cd DependencyInjectionExampleSolution
+   #        docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+   #        docker images
  
   # Docker_Build:
   #   runs-on: ubuntu-latest
@@ -89,26 +89,26 @@ jobs:
   #         docker images
        # gh run download ${{ github.run_id }}
          
-      - name: Aqua Security Trivy
-        uses: aquasecurity/trivy-action@0.18.0
-        with:   
-          exit-code: 0
-          severity: MEDIUM,HIGH,CRITICAL
-          format: table
-          image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+      # - name: Aqua Security Trivy
+      #   uses: aquasecurity/trivy-action@0.18.0
+      #   with:   
+      #     exit-code: 0
+      #     severity: MEDIUM,HIGH,CRITICAL
+      #     format: table
+      #     image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
           
-      - name: Azure CLI
-        run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
+      # - name: Azure CLI
+      #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
         
-      - uses: Azure/get-keyvault-secrets@v1
-        with:
-          keyvault: "Sharnikeyvault"
-          secrets: 'docker-login, docker-pass'
-        id: DemoSecretAction
+      # - uses: Azure/get-keyvault-secrets@v1
+      #   with:
+      #     keyvault: "Sharnikeyvault"
+      #     secrets: 'docker-login, docker-pass'
+      #   id: DemoSecretAction
         
-      - name: Docker build using Dockerfile
-        run: |
-          docker login githubcipractice.azurecr.io -u ${{ steps.DemoSecretAction.outputs.docker-login }} -p ${{ steps.DemoSecretAction.outputs.docker-pass }}
-          docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
-          docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+      # - name: Docker build using Dockerfile
+      #   run: |
+      #     docker login githubcipractice.azurecr.io -u ${{ steps.DemoSecretAction.outputs.docker-login }} -p ${{ steps.DemoSecretAction.outputs.docker-pass }}
+      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
 
