@@ -6,7 +6,7 @@ RUN dotnet publish DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj 
 RUN cd app/publish && ls
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 80
 COPY --from=build /src/app/publish .
 ENTRYPOINT ["dotnet", "DepedencyInjectionUsingMVC.dll"]
 # RUN adduser --disabled-password --gecos '' non-root && \
