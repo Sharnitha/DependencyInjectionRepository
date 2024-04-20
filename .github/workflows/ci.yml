@@ -44,7 +44,7 @@ jobs:
     - uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: "squ_33fc07c997a708b5beae2d6d3201ae4fa6a45e97" 
-        SONAR_HOST_URL: "http://20.115.87.78:9090"
+        SONAR_HOST_URL: "http://20.115.87.78:9090/"
         # SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret3 }}
         # SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret4 }}
       with:
