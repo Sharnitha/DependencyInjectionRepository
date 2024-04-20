@@ -26,31 +26,18 @@
 # ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
  # Testing the functionality
 
+
+
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /DependencyInjectionRepository
-
-# Copy the necessary files to the container
-COPY DependencyInjectionExampleSolution ./DependencyInjectionExampleSolution
-
-# Print the current directory and list its contents
-RUN pwd && ls -l
-
-# Navigate to the DependencyInjectionExampleSolution directory
-WORKDIR /DependencyInjectionRepository/DependencyInjectionExampleSolution
-
-# Print the current directory and list its contents
-RUN pwd && ls -l
-
-# FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-# WORKDIR /DependencyInjectionRepository
-# RUN ls
-# RUN dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
-# FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
-# WORKDIR /app
-# # RUN useradd -u 8765 non-root && chown -R non-root /tmp
-# RUN adduser --disabled-password --gecos '' non-root && \
-#     chown -R non-root /app
-# USER non-root
-# EXPOSE 5000
-# COPY --from=build /app/publish .
-# ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
+RUN ls
+RUN dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
+WORKDIR /app
+# RUN useradd -u 8765 non-root && chown -R non-root /tmp
+RUN adduser --disabled-password --gecos '' non-root && \
+    chown -R non-root /app
+USER non-root
+EXPOSE 5000
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "DependencyInjectionUsingMVC.dll"]
