@@ -100,14 +100,15 @@ jobs:
       - name: Azure CLI
         run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
         
-      # - uses: Azure/get-keyvault-secrets@v1
-      #   with:
-      #     keyvault: "Sharnikeyvault"
-      #     secrets: 'docker-login, docker-pass'
-      #   id: GetSecretAction
-      # - name: Docker build using Dockerfile
-      #   run: |
-      #     docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
-      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
-      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+      - uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: "Sharnikeyvault"
+          secrets: 'docker-login, docker-pass'
+        id: DemoSecretAction
+        
+      - name: Docker build using Dockerfile
+        run: |
+          docker login githubcipractice.azurecr.io -u ${{ steps.DemoSecretAction.outputs.docker-login }} -p ${{ steps.DemoSecretAction.outputs.docker-pass }}
+          docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+          docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
 
