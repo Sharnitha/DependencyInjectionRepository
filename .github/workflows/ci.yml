@@ -96,9 +96,18 @@ jobs:
           severity: MEDIUM,HIGH,CRITICAL
           format: table
           image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
-      - name: Docker build using Dockerfile
-        run: |
-          docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
-          docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+          
+      - name: Azure CLI
+        run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
+        
+      # - uses: Azure/get-keyvault-secrets@v1
+      #   with:
+      #     keyvault: "Sharnikeyvault"
+      #     secrets: 'docker-login, docker-pass'
+      #   id: GetSecretAction
+      # - name: Docker build using Dockerfile
+      #   run: |
+      #     docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
 
