@@ -45,9 +45,14 @@
             with:        
                 # Path to the manifest files which will be used for deployment.
                 manifests: |
-                  k8s/deployment.yml
+                  k8s/deploy.yml
                   k8s/service.yml
                 images: '${{secrets.DOCKER_LOGIN}}/githubactions-aks-demo:8766479298'
                 imagepullsecrets: docker-image-pull-secret
                 action: deploy
+                
+          - name: container 
+            run: |
+              kubectl get pods 
+              kubectl get svc
  
