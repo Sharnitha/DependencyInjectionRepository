@@ -1,56 +1,52 @@
-  # name: CD file
+  name: CD file
   
-  # on: 
-  #    workflow_run:
-  #     workflows: 
-  #      - CI
-  #     types:
-  #       - completed
+  on: 
+     workflow_dispatch:
+      # workflows: 
+      #  - CI
+      # types:
+      #   - completed
      
-  # jobs:
-  #   AKS_CD_Deployment:
-  #    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-  #    environment:
-  #       name: Dev
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #         - name: Docker Login to ACR
-  #           uses: docker/login-action@v3.1.0
-  #           with:
-  #             registry: githubcipractice.azurecr.io
-  #             username: ${{ secrets.DOCKER_LOGIN }} 
-  #             password: ${{ secrets.DOCKER_PASSWORD }} 
-  #             ecr: false
-  #         - name: Azure CLI
-  #           run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
-  #         - name: aks context
-  #           run: az aks get-credentials --resource-group sharnitha-poc --name pracdemoeks --overwrite-existing
-  #       # Create K8s secrets to pull images
-  #         - name: Create secret in Kubernetes cluster
-  #           uses: Azure/k8s-create-secret@v1.1
-  #           with:
-  #               # Container registry url
-  #               container-registry-url: https://githubcipractice.azurecr.io
-  #               # Container registry username
-  #               container-registry-username: '${{secrets.DOCKER_LOGIN}}'
-  #               # Container registry password
-  #               container-registry-password:  '${{secrets.DOCKER_PASSWORD}}'
-  #               # Type of Kubernetes secret. For example, docker-registry or generic
-  #               secret-type: docker-registry
-  #               # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
-  #               secret-name: docker-image-pull-secret
+  jobs:
+    AKS_CD_Flow:
+     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+     environment:
+        name: DEV
+     runs-on: ubuntu-latest
+     steps:
+          - name: Azure CLI
+            run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
             
-  #         # Deploy to k8s cluster
-  #         - name: Deploy to Kubernetes cluster
-  #           uses: Azure/k8s-deploy@v1
-  #           with:        
-  #               # Path to the manifest files which will be used for deployment.
-  #               manifests: |
-  #                 k8s/deployment.yml
-  #                 k8s/service.yml
-  #               # Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files Example: contosodemo.azurecr.io/helloworld:test
-  #               images: '${{secrets.DOCKER_LOGIN}}/githubactions-aks-demo:${{github.sha}}'
-  #               # Name of a docker-registry secret that has already been set up within the cluster. Each of these secret names are added under imagePullSecrets field for the workloads found in the input manifest files
-  #               imagepullsecrets: docker-image-pull-secret
-  #               # deploy/promote/reject
-  #               action: deploy
+          - name: Docker Login
+            run: |
+              docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+              
+          - name: aks-set 
+            uses: azure/aks-set-context@v3
+            with:
+             resource-group: 'sharnitha-poc'
+             cluster-name: 'pracdemoeks'
+      
+        # Create K8s secrets to pull images
+          - name: Create secret in Kubernetes cluster
+            uses: Azure/k8s-create-secret@v1.1
+            with:
+                container-registry-url: https://githubcipractice.azurecr.io
+                container-registry-username: '${{secrets.DOCKER_LOGIN}}'
+                container-registry-password:  '${{secrets.DOCKER_PASSWORD}}'
+                secret-type: docker-registry
+                secret-name: docker-image-pull-secret
+
+          - name: Checkout code
+            uses: actions/checkout@v4
+             
+          - name: Deploy to Kubernetes cluster
+            uses: Azure/k8s-deploy@v1
+            with:        
+                # Path to the manifest files which will be used for deployment.
+                manifests: |
+                  k8s/deployment.yml
+                  k8s/service.yml
+                images: '${{secrets.DOCKER_LOGIN}}/githubactions-aks-demo:8766479298'
+                imagepullsecrets: docker-image-pull-secret
+                action: deploy
