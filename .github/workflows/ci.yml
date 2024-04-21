@@ -4,9 +4,9 @@ name: CI
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #   - feature
+  push:
+    branches:
+    - feature
     # paths:
     # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
