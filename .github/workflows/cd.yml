@@ -16,10 +16,26 @@
      steps:
           - name: Azure CLI
             run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
-            
-          - name: Docker Login
+
+          - name: Fetch run ID from CI artifact
+            id: fetch_run_id
+            uses: actions/download-artifact@v2
+            with:
+              name: run-id
+              path: ./
+    
+          - name: Determine tag to use
+            id: determine_tag
             run: |
-              docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+              if [ -f "./run-id" ]; then
+                echo "Using tag from CI pipeline"
+                TAG=$(cat ./run-id)
+              else
+                echo "CI pipeline not run, using latest tag from ACR"
+                TAG=$(az acr repository show-tags --name <ACR_NAME> --repository demoenv --orderby time_desc --top 1 --output tsv)
+              fi
+              echo "::set-output name=tag::$TAG"
+
               
           - name: aks-set 
             uses: azure/aks-set-context@v3
@@ -39,7 +55,11 @@
 
           - name: Checkout code
             uses: actions/checkout@v4
-             
+
+          - name: Docker Login
+            run: |
+              docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+              
           - name: Deploy to Kubernetes cluster
             uses: Azure/k8s-deploy@v1
             with:        
@@ -47,10 +67,11 @@
                 manifests: |
                   k8s/deploy.yml
                   k8s/service.yml
-                images: '${{secrets.DOCKER_LOGIN}}/githubactions-aks-demo:8766479298'
+                images: '${{secrets.DOCKER_LOGIN}}/githubactions-aks-demo:${IMAGE_TAG}' # 8766479298
                 imagepullsecrets: docker-image-pull-secret
                 action: deploy
-                
+            env:
+              IMAGE_TAG: ${{ steps.determine_tag.outputs.tag }}
           - name: container 
             run: |
               kubectl get pods 
