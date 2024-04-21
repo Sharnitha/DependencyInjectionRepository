@@ -74,6 +74,7 @@
             #   IMAGE_TAG: ${{ steps.determine_tag.outputs.tag }}
           - name: container 
             run: |
+              kubectl get nodes
               kubectl get pods 
               kubectl get svc
  
