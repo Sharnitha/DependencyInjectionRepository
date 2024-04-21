@@ -1,17 +1,17 @@
   name: CD file
   
   on: 
-     workflow_run:
-      workflows: 
-       - CI
-      types:
-        - completed
+     workflow_dispatch:
+      # workflows: 
+      #  - CI
+      # types:
+      #   - completed
      
   jobs:
-    AKS_CD_Deployment:
-     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    AKS_CD_Flow:
+     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
      environment:
-        name: Dev
+        name: DEV
      runs-on: ubuntu-latest
      steps:
           - name: Azure CLI
