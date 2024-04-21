@@ -4,9 +4,9 @@ name: CI
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #   - feature
+  push:
+    branches:
+    - feature
     # paths:
     # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
@@ -89,11 +89,16 @@ jobs:
           docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
           
       - name: Store run ID as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: run-id
           path: ${{ github.run_id }}
 
+# - name: UploadArtifact
+#       uses: actions/upload-artifact@v4.3.1
+#       with:
+#         name: dotnet_artifacts
+#         path: bin/release/netcoreapp3.1/publish/aks-ga-demo.dll
  
   # Docker_Build:
   #   runs-on: ubuntu-latest
