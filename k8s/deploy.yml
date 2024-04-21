@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: aks-demo
 spec:
+  replicas: 3  # Change the number of replicas as needed
   selector:
     matchLabels:
       app: aks-demo
@@ -11,8 +12,36 @@ spec:
       labels:
         app: aks-demo
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: aks-agentpool-14855237-vmss000000  # Node name
       containers:
       - name: aks-demo-container
         image: githubcipractice.azurecr.io/demoenv:8766479298
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"  # Define CPU limit
+            memory: "512Mi"  # Define memory limit
+          requests:
+            cpu: "0.5"  # Define CPU request
+            memory: "256Mi"  # Define memory request
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: aks-demo
+# spec:
+#   selector:
+#     matchLabels:
+#       app: aks-demo
+#   template:
+#     metadata:
+#       labels:
+#         app: aks-demo
+#     spec:
+#       containers:
+#       - name: aks-demo-container
+#         image: githubcipractice.azurecr.io/demoenv:8766479298
+#         ports:
+#         - containerPort: 80
