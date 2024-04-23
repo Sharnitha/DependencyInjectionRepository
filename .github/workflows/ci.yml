@@ -7,6 +7,9 @@ on:
   # push:
   #   branches:
   #   - feature
+  pull_request:
+    branches:
+    - feature
     # paths:
     # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
