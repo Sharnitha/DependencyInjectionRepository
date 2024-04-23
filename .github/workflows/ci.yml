@@ -19,7 +19,7 @@ on:
   
 jobs:
   Dotnet:
-    if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/feature'
+    # if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/feature'
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
  # ManualSonar:
