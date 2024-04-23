@@ -22,6 +22,7 @@ jobs:
     name: Sonarqub
     runs-on: windows-latest
     steps:
+      - uses: ./.github/workflows/dotnet_workflow_reuse.yml
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
