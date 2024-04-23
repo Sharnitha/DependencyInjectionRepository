@@ -41,7 +41,7 @@ jobs:
  #          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
         
   ManualSonar:
-    if: "github.ref == github.event.pull_request.head.ref"
+    if: "github.ref != github.event.pull_request.head.ref"
     runs-on: Ubuntu-latest
     needs: Dotnet
     steps:
