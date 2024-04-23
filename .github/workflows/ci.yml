@@ -5,17 +5,17 @@ name: CI
 on:
   push:
     branches:
-    - feature
+    - enhance001
   pull_request:
     branches:
-    - feature
+    - enhance001
 
 # env:
 #     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
   
 jobs:
   Dotnet:
-    if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/feature'
+    if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/enhance001'
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
  # ManualSonar:
