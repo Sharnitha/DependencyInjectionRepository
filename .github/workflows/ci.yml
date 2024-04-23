@@ -47,8 +47,8 @@ jobs:
     # needs: Dotnet
     steps:
          
-    - name: Azure CLI
-      run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
+    # - name: Azure CLI
+    #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
     # - uses: Azure/get-keyvault-secrets@v1
     #   with:
@@ -58,11 +58,11 @@ jobs:
    
     - uses: sonarsource/sonarqube-scan-action@master
       env:
-        SONAR_TOKEN: "sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2" 
+        SONAR_TOKEN: "squ_e68703675c202448507701bf069fb2c317bf08ca" 
         SONAR_HOST_URL: "http://20.124.81.89:9000/"
       with:
        args: >
-         -Dsonar.projectKey=dotnet01
+         -Dsonar.projectKey=dotnet
     
         
   # Docker_Login:
