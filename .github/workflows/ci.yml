@@ -3,14 +3,9 @@
 name: CI
 
 on:
-
-  # workflow_dispatch:
   pull_request:
     branches:
     - enhance001
-
-    # paths:
-    # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
 # env:
 #     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
