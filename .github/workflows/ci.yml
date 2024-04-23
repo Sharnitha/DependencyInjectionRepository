@@ -4,9 +4,9 @@ name: CI
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - feature
+  # push:
+  #   branches:
+  #   - feature
     # paths:
     # - DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/*
 
@@ -46,7 +46,7 @@ jobs:
   ManualSonar:
     if: "github.ref != github.event.pull_request.head.ref"
     runs-on: Ubuntu-latest
-    # needs: Dotnet
+    needs: Dotnet
     steps:
     
     # - name: Azure CLI
