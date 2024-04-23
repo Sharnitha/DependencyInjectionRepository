@@ -46,7 +46,7 @@ jobs:
     runs-on: Ubuntu-latest
     # needs: Dotnet
     steps:
-         
+    
     # - name: Azure CLI
     #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
@@ -55,7 +55,8 @@ jobs:
     #     keyvault: "Sharnikeyvault"
     #     secrets: 'mySecret3, mySecret4'
     #   id: myGetSecretAction
-   
+    - name: Checkout code
+      uses: actions/checkout@v4  
     - uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: "squ_e68703675c202448507701bf069fb2c317bf08ca" 
