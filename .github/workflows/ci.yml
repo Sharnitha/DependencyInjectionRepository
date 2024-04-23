@@ -14,8 +14,9 @@ on:
 #     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
   
 jobs:
-  # Dotnet:
-  #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
+  Dotnet:
+    if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/feature'
+    uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
  # ManualSonar:
  #    runs-on: Ubuntu-latest
@@ -43,6 +44,7 @@ jobs:
  #          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
         
   ManualSonar:
+    if: "github.ref != github.event.pull_request.head.ref"
     runs-on: Ubuntu-latest
     # needs: Dotnet
     steps:
