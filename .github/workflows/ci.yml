@@ -59,7 +59,7 @@ jobs:
     - uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: "sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2" 
-        SONAR_HOST_URL: "http://20.124.81.89:9090/"
+        SONAR_HOST_URL: "http://20.124.81.89:9000/"
       with:
        args: >
          -Dsonar.projectKey=dotnet
