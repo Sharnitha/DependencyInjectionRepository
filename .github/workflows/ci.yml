@@ -62,7 +62,7 @@ jobs:
         SONAR_HOST_URL: "http://20.124.81.89:9000/"
       with:
        args: >
-         -Dsonar.projectKey=dotnet
+         -Dsonar.projectKey=dotnet01
     
         
   # Docker_Login:
