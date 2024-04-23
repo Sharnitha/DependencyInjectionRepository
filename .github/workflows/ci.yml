@@ -17,38 +17,38 @@ jobs:
   # Dotnet:
   #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
- ManualSonar:
+ # ManualSonar:
+ #    runs-on: Ubuntu-latest
+ #    # needs: Dotnet
+ #    steps:
+ #      - name: Remove Previous Dotnet Version
+ #        run : |
+ #          cd /usr/share/dotnet/
+ #          rm -rf *
+ #      - name: Checkout code
+ #        uses: actions/checkout@v3
+ #      - name: Setup .NET Core SDK
+ #        uses: actions/setup-dotnet@v3
+ #        with:
+ #          dotnet-version: 3.1.426
+ #      - name: Listing Dotnet version
+ #        run: dotnet --version
+ #      - name: Change Directory
+ #        run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
+ #      - name: dotnet tool
+ #        run: |
+ #          dotnet tool install --global dotnet-sonarscanner
+ #          dotnet sonarscanner begin /k:"dotnet" /d:sonar.host.url="http://20.124.81.89:9000"  /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
+ #          dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+ #          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
+        
+  ManualSonar:
     runs-on: Ubuntu-latest
     # needs: Dotnet
     steps:
-      - name: Remove Previous Dotnet Version
-        run : |
-          cd /usr/share/dotnet/
-          rm -rf *
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 3.1.426
-      - name: Listing Dotnet version
-        run: dotnet --version
-      - name: Change Directory
-        run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
-      - name: dotnet tool
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:"dotnet" /d:sonar.host.url="http://20.124.81.89:9000"  /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
-          dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
-        
-  # ManualSonar:
-  #   runs-on: Ubuntu-latest
-  #   needs: Dotnet
-  #   steps:
          
-    # - name: Azure CLI
-    #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
+    - name: Azure CLI
+      run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
 
     # - uses: Azure/get-keyvault-secrets@v1
     #   with:
@@ -56,15 +56,13 @@ jobs:
     #     secrets: 'mySecret3, mySecret4'
     #   id: myGetSecretAction
    
-    # - uses: sonarsource/sonarqube-scan-action@master
-    #   env:
-    #     SONAR_TOKEN: "squ_33fc07c997a708b5beae2d6d3201ae4fa6a45e97" 
-    #     SONAR_HOST_URL: "http://20.115.87.78:9090/"
-    #     # SONAR_TOKEN: ${{ steps.myGetSecretAction.outputs.mySecret3 }}
-    #     # SONAR_HOST_URL:  ${{ steps.myGetSecretAction.outputs.mySecret4 }}
-    #   with:
-    #    args: >
-    #      -Dsonar.projectKey=dotnet
+    - uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: "sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2" 
+        SONAR_HOST_URL: "http://20.124.81.89:9090/"
+      with:
+       args: >
+         -Dsonar.projectKey=dotnet
     
         
   # Docker_Login:
