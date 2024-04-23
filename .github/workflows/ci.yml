@@ -3,9 +3,9 @@
 name: CI
 
 on:
-  # push:
-  #   branches:
-  #   - enhance001
+  push:
+    branches:
+    - enhance001
   pull_request:
     branches:
     - enhance001
