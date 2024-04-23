@@ -17,19 +17,13 @@ jobs:
   # Dotnet:
   #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
-  Sonar:
-
-    name: Sonarqub
+  build:
+    name: Build
     runs-on: windows-latest
     steps:
-    
-      - name: Publish Dotnet
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Building Dotnet
-        run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-        
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -53,15 +47,18 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: change directory
+        run: |
+          cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"dotnet" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
+  
   # ManualSonar:
   #   runs-on: Ubuntu-latest
   #   needs: Dotnet
