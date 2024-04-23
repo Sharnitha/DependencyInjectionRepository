@@ -3,9 +3,9 @@
 name: CI
 
 on:
-  push:
-    branches:
-    - enhance001
+  # push:
+  #   branches:
+  #   - enhance001
   pull_request:
     branches:
     - enhance001
@@ -15,7 +15,6 @@ on:
   
 jobs:
   Dotnet:
-    if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/enhance001'
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
  # ManualSonar:
@@ -44,7 +43,6 @@ jobs:
  #          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
         
   ManualSonar:
-    if: "github.ref != github.event.pull_request.head.ref"
     runs-on: Ubuntu-latest
     needs: Dotnet
     steps:
