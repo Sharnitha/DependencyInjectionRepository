@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - enhance001
+  
+jobs:
+  ManualSonar:
+    runs-on: Ubuntu-latest 
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v4  
+    - uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: "squ_e68703675c202448507701bf069fb2c317bf08ca" 
+        SONAR_HOST_URL: "http://20.124.81.89:9000/"
+      with:
+       args: >
+         -Dsonar.projectKey=dotnet
+    
