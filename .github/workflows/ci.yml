@@ -21,6 +21,20 @@ jobs:
     runs-on: Ubuntu-latest
     # needs: Dotnet
     steps:
+      - name: Remove Previous Dotnet Version
+        run : |
+          cd /usr/share/dotnet/
+          rm -rf *
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 3.1.426
+      - name: Listing Dotnet version
+        run: dotnet --version
+      - name: Change Directory
+        run: cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC && ls
       - name: dotnet tool
         run: |
           dotnet tool install --global dotnet-sonarscanner
