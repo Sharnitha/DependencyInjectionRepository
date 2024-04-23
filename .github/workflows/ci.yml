@@ -25,7 +25,7 @@ jobs:
         run: |
           dotnet tool install --global dotnet-sonarscanner
           dotnet sonarscanner begin /k:"dotnet" /d:sonar.host.url="http://20.124.81.89:9000"  /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
-          cd dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+          dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
           dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
         
   # ManualSonar:
