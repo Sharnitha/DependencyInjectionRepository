@@ -15,7 +15,7 @@ jobs:
   Dotnet:
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
-  ManualSonar:
+  Sonar_ci:
     runs-on: Ubuntu-latest
     needs: Dotnet
     steps:
@@ -52,7 +52,7 @@ jobs:
         
   Docker_Login:
     runs-on: ubuntu-latest
-    needs: ManualSonar
+    # needs: ManualSonar
     steps:
       - name: Docker Login to ACR
         uses: docker/login-action@v3.1.0
