@@ -7,7 +7,7 @@ A dependency is an object that another object depends on. Examine the followin
             Console.WriteLine($"MyDependency.WriteMessage called. Message: {message}");
         }
     }
-    
+    #Hello World!"
 
 A class can create an instance of the MyDependency class to make use of its WriteMessage method. In the following example, the MyDependency class is a dependency of the IndexModel class:
 
