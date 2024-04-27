@@ -6,9 +6,10 @@ on:
 jobs:
   Check:
     runs-on: self-hosted
-    - name
-      run: echo "Hello world"
-    - name: listing files and directory
-      run: |
+    steps:
+     - name: executing hello world
+       run: echo "Hello world"
+     - name: listing files and directory
+       run: |
         ls 
         pwd
