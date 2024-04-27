@@ -1,6 +1,8 @@
 name: echo fiunction to execute
 on:
-  workflow_dispatch:
+  push:
+    branches:
+    - feature
 jobs:
   Check:
     runs-on: self-hosted
