@@ -1,0 +1,12 @@
+name: echo fiunction to execute
+on:
+  workflow_dispatch:
+jobs:
+  Check:
+    runs-on: self-hosted
+    - name
+      run: echo "Hello world"
+    - name: listing files and directory
+      run: |
+        ls 
+        pwd
