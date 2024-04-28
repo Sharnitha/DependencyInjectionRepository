@@ -55,19 +55,23 @@ jobs:
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
             ls 
             dotnet build -c release -o app/publish
+            cd app/publish && ls
+            
+        - name: End SonarQube analysis
+          run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
 
         # - name: Run tests and collect coverage
         #   run: |
         #     dotnet test --collect:"XPlat Code Coverage" -r "$(Agent.BuildDirectory)/TestResults/" --logger trx
   
-        - name: End SonarQube analysis
-          run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
+        # - name: End SonarQube analysis
+        #   run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
   
-        - name: Upload SonarQube results
-          uses: actions/upload-artifact@v2
-          with:
-            name: sonarqube-report
-            path: .scannerwork/report-task.txt
+        # - name: Upload SonarQube results
+        #   uses: actions/upload-artifact@v2
+        #   with:
+        #     name: sonarqube-report
+        #     path: .scannerwork/report-task.txt
 
            
         # - name: SonarScanner tool installed
