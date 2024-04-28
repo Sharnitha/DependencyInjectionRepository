@@ -36,9 +36,14 @@ jobs:
         - name: Change directory
           run: |
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+            ls
             
         - name: SonarScanner tool installed
           run: dotnet tool install --global dotnet-sonarscanner
+
+        - name: Change directory
+          run: |
+            ls
 
         - name: Begin SonarQube analysis
           run: |
@@ -52,8 +57,7 @@ jobs:
 
         - name: Build project
           run: |
-            pwd
-            ls
+            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
             dotnet build -c release -o app/publish
             cd app/publish && ls
             
