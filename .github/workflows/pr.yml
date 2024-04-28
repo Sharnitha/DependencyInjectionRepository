@@ -31,16 +31,47 @@ jobs:
           run: |
             dotnet --version
             java --version
-           
+
         - name: SonarScanner tool installed
           run: |
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-            dotnet tool install --global dotnet-sonarscanner
-            dotnet sonarscanner --version
-            dotnet sonarscanner begin /k:"Project" /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" /d:sonar.host.url="http://20.55.107.191:9090/" /v:"$(Build.BuildId)" /d:sonar.cs.vstest.reportsPaths="$(Agent.TempDirectory)/*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="$(Agent.BuildDirectory)/TestResults/coverage.xml"
-            dotnet build  -c release -o app/build
-            dotnet-coverage collect 'dotnet test' -f xml -o "$(Agent.BuildDirectory)/TestResults/coverage.xml"
-            dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" 
+
+        - name: Begin SonarQube analysis
+          run: |
+            dotnet sonarscanner begin /k:"Project" \
+            /d:sonar.login="admin" \
+            /d:sonar.password="Sonardotnettest" \
+            /d:sonar.host.url="http://20.55.107.191:9090/" \
+            /v:"${{ github.run_number }}" \
+            /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
+            /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
+
+        - name: Build project
+          run: dotnet build -c release -o app/publish
+
+        - name: Run tests and collect coverage
+          run: |
+            dotnet test --collect:"XPlat Code Coverage" -r "$(Agent.BuildDirectory)/TestResults/" --logger trx
+  
+        - name: End SonarQube analysis
+          run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
+  
+        - name: Upload SonarQube results
+          uses: actions/upload-artifact@v2
+          with:
+            name: sonarqube-report
+            path: .scannerwork/report-task.txt
+
+           
+        # - name: SonarScanner tool installed
+        #   run: |
+        #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+        #     dotnet tool install --global dotnet-sonarscanner
+        #     dotnet sonarscanner --version
+        #     dotnet sonarscanner begin /k:"Project" /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" /d:sonar.host.url="http://20.55.107.191:9090/" /v:"$(Build.BuildId)" /d:sonar.cs.vstest.reportsPaths="$(Agent.TempDirectory)/*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="$(Agent.BuildDirectory)/TestResults/coverage.xml"
+        #     dotnet build  -c release -o app/build
+        #     dotnet-coverage collect 'dotnet test' -f xml -o "$(Agent.BuildDirectory)/TestResults/coverage.xml"
+        #     dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" 
           # dotnet sonarscanner end /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"  
           # dotnet sonarscanner begin /k:"Project" /d:sonar.host.url="http://20.55.107.191:9090/"  /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"
                   
