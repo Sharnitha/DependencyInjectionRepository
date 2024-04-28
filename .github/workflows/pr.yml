@@ -42,5 +42,5 @@ jobs:
             dotnet sonarscanner end /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"
             
   
-      
+       
           
