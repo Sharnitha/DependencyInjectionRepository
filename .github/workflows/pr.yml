@@ -9,11 +9,19 @@ jobs:
     if: "github.ref != github.event.pull_request.head.ref"
     runs-on: Ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 
+    - name: switching directory
+      run: |
+        cd DependencyInjectionRepository/DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+        ls 
+        pwd
+      
     - name: SonarScanner tool installed
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"Project" /d:sonar.host.url="http://20.55.107.191:9090"  /d:sonar.login="sqp_aebaa19186a06f856bc6cca5d6ea1261ca544700"
-        dotnet build DependencyInjectionRepository/DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/ -c release -o app/build
+        dotnet build  -c release -o app/build
         cd app/build && ls 
         dotnet sonarscanner end /d:sonar.login="sqp_aebaa19186a06f856bc6cca5d6ea1261ca544700"
         
