@@ -13,6 +13,12 @@ namespace DepedencyInjectionUsingMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
+namespace DepedencyInjectionUsingMVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
 
         //private readonly IMyDependency _dependencyService;
 
