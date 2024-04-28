@@ -7,7 +7,7 @@ jobs:
   ManualSonar:
         runs-on: ubuntu-latest
         steps:
-        - name: Remove Previous Dotnet Version
+        - name: Remove Previous Dotnet Version 
           run : |
             cd /usr/share/dotnet/
             rm -rf *
