@@ -52,8 +52,8 @@ jobs:
 
         - name: Build project
           run: |
-            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-            ls 
+            pwd
+            ls
             dotnet build -c release -o app/publish
             cd app/publish && ls
             
