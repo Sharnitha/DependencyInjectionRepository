@@ -32,9 +32,11 @@ jobs:
             dotnet --version
             java --version
 
-        - name: SonarScanner tool installed
+        - name: Change directory
           run: |
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+        - name: SonarScanner tool installed
+          run: dotnet tool install --global dotnet-sonarscanner
 
         - name: Begin SonarQube analysis
           run: |
