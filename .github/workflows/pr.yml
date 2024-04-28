@@ -18,16 +18,23 @@ jobs:
           uses: actions/setup-dotnet@v3
           with:
             dotnet-version: 3.1.426
-        - name: remove java version
-          run: | 
-            sudo yum remove java-1.*
-            sudo yum update
-            sudo yum install java-17-openjdk 
+            
+        - name: Uninstall existing Java
+          run: |
+            sudo apt-get purge --auto-remove openjdk*
+    
+        - name: Install Java 17
+          run: |
+            sudo apt update
+            sudo apt install openjdk-17-jdk
+
+        - name: Verify Java version
+          run: java --version
         - name: Listing Dotnet version
           run: |
             dotnet --version
             java --version
-        
+            
         - name: SonarScanner tool installed
           run: |
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
