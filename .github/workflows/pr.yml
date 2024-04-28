@@ -35,14 +35,11 @@ jobs:
         - name: SonarScanner tool installed
           run: |
             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-            dotnet build  -c release -o app/build
-        - name: dotnet _sonar
-          run: |
             dotnet tool install --global dotnet-sonarscanner
             dotnet sonarscanner --version
-            dotnet sonarscanner begin /k:"Project" /d:sonar.host.url="http://20.55.107.191:9090"  /d:sonar.login="sqp_aebaa19186a06f856bc6cca5d6ea1261ca544700"
+            dotnet sonarscanner begin /k:"Project" /d:sonar.host.url="http://20.55.107.191:9090"  /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"
             dotnet build  -c release -o app/build
-            dotnet sonarscanner end /d:sonar.login="sqp_aebaa19186a06f856bc6cca5d6ea1261ca544700"
+            dotnet sonarscanner end /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"
             
   
       
