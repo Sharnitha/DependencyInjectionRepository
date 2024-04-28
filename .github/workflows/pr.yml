@@ -19,12 +19,11 @@ jobs:
           with:
             dotnet-version: 3.1.426
             
-        - uses: actions/checkout@v4
-        - uses: actions/setup-java@v4
+        - name: Setup Java JDK
+          uses: actions/setup-java@v4.2.1
           with:
-            distribution: 'temurin' # See 'Supported distributions' for available options
-            java-version: '21'
-        - run: java HelloWorldApp.java
+            java-version: 17
+            distribution: temurin
 
 
         - name: Verify Java version
