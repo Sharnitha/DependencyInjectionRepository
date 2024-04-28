@@ -3,8 +3,7 @@ on:
   push:
     branches:
     - newprbrancj  
-jobs:
-        
+jobs:     
   ManualSonar:
         runs-on: ubuntu-latest
         steps:
@@ -33,20 +32,13 @@ jobs:
             dotnet --version
             java --version
 
-        - name: Change directory
-          run: |
-            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-            ls
-            
+        
         - name: SonarScanner tool installed
           run: dotnet tool install --global dotnet-sonarscanner
 
-        - name: Change directory
-          run: |
-            ls
-
         - name: Begin SonarQube analysis
           run: |
+            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
             dotnet sonarscanner begin /k:"Project" \
             /d:sonar.login="admin" \
             /d:sonar.password="Sonardotnettest" \
@@ -62,7 +54,9 @@ jobs:
             cd app/publish && ls
             
         - name: End SonarQube analysis
-          run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
+          run: |
+            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+            dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
 
         # - name: Run tests and collect coverage
         #   run: |
