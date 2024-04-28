@@ -38,8 +38,9 @@ jobs:
             dotnet tool install --global dotnet-sonarscanner
             dotnet sonarscanner --version
             dotnet build  -c release -o app/build
-            dotnet sonarscanner begin /k:"Project" /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6" /d:sonar.password="Sonardotnettest" /d:sonar.host.url="http://20.55.107.191:9090/"
-            dotnet sonarscanner end /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6" /d:sonar.password="Sonardotnettest" 
+            dotnet sonarscanner begin /k:"Project" /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" /d:sonar.host.url="http://20.55.107.191:9090/" /v:"$(Build.BuildId)" /d:sonar.cs.vstest.reportsPaths="$(Agent.TempDirectory)/*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="$(Agent.BuildDirectory)/TestResults/coverage.xml"
+            dotnet-coverage collect 'dotnet test' -f xml -o "$(Agent.BuildDirectory)/TestResults/coverage.xml"
+            dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest" 
           # dotnet sonarscanner end /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"  
           # dotnet sonarscanner begin /k:"Project" /d:sonar.host.url="http://20.55.107.191:9090/"  /d:sonar.login="squ_262669e6129a7c3dd43086f72c5aaa244bd0fbc6"
                   
