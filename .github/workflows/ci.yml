@@ -17,9 +17,9 @@ on:
 #     GH_TOKEN: ${{ secrets.ARTIFACT_TOKEN }}
   
 jobs:
-  Dotnet:
+  # Dotnet:
     # if: github.ref == github.event.pull_request.head.ref || github.ref == 'refs/heads/feature'
-    uses: ./.github/workflows/dotnet_workflow_reuse.yml
+    # uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
  # ManualSonar:
  #    runs-on: Ubuntu-latest
@@ -46,11 +46,11 @@ jobs:
  #          dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
  #          dotnet sonarscanner end /d:sonar.login="sqp_0b9c785059f2147dd7162acc66eb6157b3bb7ff2"
         
-  ManualSonar:
-    # if: "github.ref != github.event.pull_request.head.ref"
-    runs-on: Ubuntu-latest
-    needs: Dotnet
-    steps:
+  # ManualSonar:
+  #   # if: "github.ref != github.event.pull_request.head.ref"
+  #   runs-on: Ubuntu-latest
+  #   needs: Dotnet
+  #   steps:
     
     # - name: Azure CLI
     #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
@@ -60,15 +60,15 @@ jobs:
     #     keyvault: "Sharnikeyvault"
     #     secrets: 'mySecret3, mySecret4'
     #   id: myGetSecretAction
-    - name: Checkout code
-      uses: actions/checkout@v4  
-    - uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: "squ_e68703675c202448507701bf069fb2c317bf08ca" 
-        SONAR_HOST_URL: "http://20.124.81.89:9000/"
-      with:
-       args: >
-         -Dsonar.projectKey=dotnet
+    # - name: Checkout code
+    #   uses: actions/checkout@v4  
+    # - uses: sonarsource/sonarqube-scan-action@master
+    #   env:
+    #     SONAR_TOKEN: "squ_e68703675c202448507701bf069fb2c317bf08ca" 
+    #     SONAR_HOST_URL: "http://20.124.81.89:9000/"
+    #   with:
+    #    args: >
+    #      -Dsonar.projectKey=dotnet
     
         
   # Docker_Login:
@@ -83,17 +83,17 @@ jobs:
   #         password: ${{ secrets.DOCKER_PASSWORD }} 
   #         ecr: false
 
-  # Docker_Build:
-  #   runs-on: ubuntu-latest
-  #   # needs: Docker_Login
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Docker build using Dockerfile
-  #       run: |
-  #         cd DependencyInjectionExampleSolution
-  #         docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
-  #         docker images
+  Docker_Build:
+    runs-on: ubuntu-latest
+    # needs: Docker_Login
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Docker build using Dockerfile
+        run: |
+          cd DependencyInjectionExampleSolution
+          docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+          docker images
       # - name: Aqua Security Trivy
       #   uses: aquasecurity/trivy-action@0.18.0
       #   with:   
@@ -102,14 +102,14 @@ jobs:
       #     format: table
       #     image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
           
-      # - name: Azure CLI
-      #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
+      - name: Azure CLI
+        run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
 
-      # - name: Docker build using Dockerfile
-      #   run: |
-      #     docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
-      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
-      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+      - name: Docker build using Dockerfile
+        run: |
+          docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+          docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
         
       # - uses: Azure/get-keyvault-secrets@v1
       #   with:
