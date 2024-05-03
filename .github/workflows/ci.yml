@@ -84,7 +84,7 @@ jobs:
   #         ecr: false
 
   Docker_Build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     # needs: Docker_Login
     steps:
       - name: Checkout code
