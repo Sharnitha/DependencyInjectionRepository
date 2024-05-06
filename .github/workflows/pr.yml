@@ -4,61 +4,86 @@ on:
   push:
     branches:
     - newprbrancj  
+# env: 
+#   DOTNET_VERSION: '3.1.426'
+#   DOTNET_INSTALL_DIR: "./.dotnet"
+
+# jobs:     
+#   ManualSonar:
+#         runs-on: self-hosted
+#         steps:
+#         - name: Remove Previous Dotnet Version 
+#           run : |
+#             cd /usr/share/dotnet/
+#             rm -rf *
+#         - name: Checkout code
+#           uses: actions/checkout@v4
+          
+#         - name: Setup .NET Core SDK
+#           uses: actions/setup-dotnet@v4
+#           with:
+#             dotnet-version: ${{ secrets.DOTNET_VERSION }}
+            
+#         - name: Setup Java JDK
+#           uses: actions/setup-java@v4.2.1
+#           with:
+#             java-version: 17
+#             distribution: temurin
+
+#         - name: Verify Java version
+#           run: java --version 
+#         - name: Listing Dotnet version
+#           run: |
+#             dotnet --version
+#             java --version
+
+
+#         - name: SonarScanner tool installed
+#           run: dotnet tool install --global dotnet-sonarscanner
+
+#         - name: Begin SonarQube analysis
+#           run: |
+#             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+#             dotnet sonarscanner begin /k:"Project" \
+#             /d:sonar.login="admin" \
+#             /d:sonar.password="Sonardotnettest" \
+#             /d:sonar.host.url="http://20.55.107.191:9090/" \
+#             /v:"${{ github.run_number }}" \
+#             /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
+#             /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
+
+#         - name: Build project
+#           run: |
+#             cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+#             dotnet build -c release -o app/publish
+#             cd app/publish && ls
+            
 env: 
   DOTNET_VERSION: '3.1.426'
   DOTNET_INSTALL_DIR: "./.dotnet"
 
-jobs:     
-  ManualSonar:
-        runs-on: self-hosted
-        steps:
-        # - name: Remove Previous Dotnet Version 
-        #   run : |
-        #     cd /usr/share/dotnet/
-        #     rm -rf *
-        - name: Checkout code
-          uses: actions/checkout@v4
-          
-        - name: Setup .NET Core SDK
-          uses: actions/setup-dotnet@v4
-          with:
-            dotnet-version: ${{ secrets.DOTNET_VERSION }}
-            
-        - name: Setup Java JDK
-          uses: actions/setup-java@v4.2.1
-          with:
-            java-version: 17
-            distribution: temurin
-
-        - name: Verify Java version
-          run: java --version 
-        - name: Listing Dotnet version
-          run: |
-            dotnet --version
-            java --version
-
-
-        # - name: SonarScanner tool installed
-        #   run: dotnet tool install --global dotnet-sonarscanner
-
-        # - name: Begin SonarQube analysis
-        #   run: |
-        #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-        #     dotnet sonarscanner begin /k:"Project" \
-        #     /d:sonar.login="admin" \
-        #     /d:sonar.password="Sonardotnettest" \
-        #     /d:sonar.host.url="http://20.55.107.191:9090/" \
-        #     /v:"${{ github.run_number }}" \
-        #     /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
-        #     /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
-
-        - name: Build project
-          run: |
-            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-            dotnet build -c release -o app/publish
-            cd app/publish && ls
-            
-            
+jobs:
+  Dotnet_Build:
+    runs-on: self-hosted  
+    # outputs:
+    #   run_next: ${{ steps.job1.outputs.run_next }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ secrets.DOTNET_VERSION }}
+  
+    - name: Checking Dotnet version
+      run: dotnet --version
+    - name: End SonarQube analysis
+      run: |
+        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+    - name: Install Dependency
+      run: dotnet restore
+    - name: Dotnet build
+      run: dotnet build -c release
         # - name: End SonarQube analysis
         #   run: |
         #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
@@ -70,15 +95,6 @@ jobs:
   
         # - name: End SonarQube analysis
         #   run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
-
-  testing:
-    runs-on: self-hosted
-    steps:
-     - name: Build project
-       run: |
-          cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-          dotnet build -c release -o app/publish
-          cd app/publish && ls
       
         # - name: Upload SonarQube results
         #   uses: actions/upload-artifact@v2
