@@ -1,9 +1,9 @@
 name: pr file
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-    # - newprbrancj  
+  push:
+    branches:
+    - newprbrancj  
 jobs:     
   ManualSonar:
         runs-on: self-hosted
