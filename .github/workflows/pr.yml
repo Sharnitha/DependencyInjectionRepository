@@ -1,16 +1,17 @@
 name: pr file
 on:
-  push:
-    branches:
-    - newprbrancj  
+  workflow_dispatch:
+  # push:
+  #   branches:
+    # - newprbrancj  
 jobs:     
   ManualSonar:
         runs-on: self-hosted
         steps:
-        # - name: Remove Previous Dotnet Version 
-        #   run : |
-        #     cd /usr/share/dotnet/
-        #     rm -rf *
+        - name: Remove Previous Dotnet Version 
+          run : |
+            cd /usr/share/dotnet/
+            rm -rf *
         - name: Checkout code
           uses: actions/checkout@v3
           
@@ -33,19 +34,19 @@ jobs:
             java --version
 
 
-        # - name: SonarScanner tool installed
-        #   run: dotnet tool install --global dotnet-sonarscanner
+        - name: SonarScanner tool installed
+          run: dotnet tool install --global dotnet-sonarscanner
 
-        # - name: Begin SonarQube analysis
-        #   run: |
-        #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-        #     dotnet sonarscanner begin /k:"Project" \
-        #     /d:sonar.login="admin" \
-        #     /d:sonar.password="Sonardotnettest" \
-        #     /d:sonar.host.url="http://20.55.107.191:9090/" \
-        #     /v:"${{ github.run_number }}" \
-        #     /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
-        #     /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
+        - name: Begin SonarQube analysis
+          run: |
+            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+            dotnet sonarscanner begin /k:"Project" \
+            /d:sonar.login="admin" \
+            /d:sonar.password="Sonardotnettest" \
+            /d:sonar.host.url="http://20.55.107.191:9090/" \
+            /v:"${{ github.run_number }}" \
+            /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
+            /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
 
         - name: Build project
           run: |
@@ -53,27 +54,18 @@ jobs:
             dotnet build -c release -o app/publish
             cd app/publish && ls
             
-  testdotnet:
-    runs-on: self-hosted
-    steps:
-     - name: Build project
-       run: |
-        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-        dotnet build -c release -o app/publish
-        cd app/publish && ls
-        
             
-        # - name: End SonarQube analysis
-        #   run: |
-        #     cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
-        #     dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
+        - name: End SonarQube analysis
+          run: |
+            cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+            dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
 
-        # - name: Run tests and collect coverage
-        #   run: |
-        #     dotnet test --collect:"XPlat Code Coverage" -r "$(Agent.BuildDirectory)/TestResults/" --logger trx
+        - name: Run tests and collect coverage
+          run: |
+            dotnet test --collect:"XPlat Code Coverage" -r "$(Agent.BuildDirectory)/TestResults/" --logger trx
   
-        # - name: End SonarQube analysis
-        #   run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
+        - name: End SonarQube analysis
+          run: dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonardotnettest"
   
         # - name: Upload SonarQube results
         #   uses: actions/upload-artifact@v2
