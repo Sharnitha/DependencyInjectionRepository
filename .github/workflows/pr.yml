@@ -27,7 +27,7 @@ jobs:
             distribution: temurin
 
         - name: Verify Java version
-          run: java --version
+          run: java --version 
         - name: Listing Dotnet version
           run: |
             dotnet --version
