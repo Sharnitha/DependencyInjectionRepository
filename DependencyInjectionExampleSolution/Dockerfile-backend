@@ -12,7 +12,7 @@ WORKDIR /app
 # RUN adduser --disabled-password --gecos '' non-root && \
   #  chown -R non-root /app
 # USER non-root
-EXPOSE 80
+EXPOSE 5000
 COPY --from=build /src/app/publish .
 ENTRYPOINT ["dotnet", "DepedencyInjectionUsingMVC.dll"]
 # RUN adduser --disabled-password --gecos '' non-root && \
