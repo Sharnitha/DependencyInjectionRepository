@@ -1,20 +1,20 @@
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
-RUN echo "Hi"
-
-# FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-# WORKDIR /src
-# COPY . /src
-# RUN ls
-# RUN dotnet publish DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
-# RUN cd app/publish && ls
 # FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
-# WORKDIR /app
+# RUN echo "Hi"
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY . /src
+RUN ls
+RUN dotnet publish DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
+RUN cd app/publish && ls
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
+WORKDIR /app
 # RUN adduser --disabled-password --gecos '' non-root && \
   #  chown -R non-root /app
 # USER non-root
-# EXPOSE 80
-# COPY --from=build /src/app/publish .
-# ENTRYPOINT ["dotnet", "DepedencyInjectionUsingMVC.dll"]
+EXPOSE 80
+COPY --from=build /src/app/publish .
+ENTRYPOINT ["dotnet", "DepedencyInjectionUsingMVC.dll"]
 # RUN adduser --disabled-password --gecos '' non-root && \
  #   chown -R non-root /app
 # USER non-root
