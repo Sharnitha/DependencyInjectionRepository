@@ -48,7 +48,7 @@ jobs:
     - name: End SonarQube analysis
       run: |
         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
-        dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="demoprij"
+        dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="Sonar@123"
 
         
   # Docker_Build:
