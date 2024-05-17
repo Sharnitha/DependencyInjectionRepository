@@ -9,11 +9,11 @@ on:
     - feature-private
   
 jobs:
-  Dotnet:
-    uses: ./.github/workflows/dotnet_workflow_reuse.yml
+  # Dotnet:
+  #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
   Real_Sonar:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps: 
     - name: Checkout code
       uses: actions/checkout@v4      
@@ -31,10 +31,10 @@ jobs:
     - name: Begin SonarQube analysis
       run: |
         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
-        dotnet sonarscanner begin /k:"<projectname-(frontend)>" \
+        dotnet sonarscanner begin /k:"demoprij" \
         /d:sonar.login="admin" \
-        /d:sonar.password="<oasworrd>" \
-        /d:sonar.host.url="<url>" \
+        /d:sonar.password="Sonar@123" \
+        /d:sonar.host.url="http://172.212.80.62:9000/" \
         /v:"${{ github.run_number }}" \
         /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
         /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
@@ -48,7 +48,7 @@ jobs:
     - name: End SonarQube analysis
       run: |
         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
-        dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="<password>"
+        dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="demoprij"
 
         
   # Docker_Build:
