@@ -13,18 +13,18 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 3.1.426
-    - name: Listing Dotnet version
-      run: dotnet --version
-    - name: Dotnet restore
-      run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-    - name: Building Dotnet
-      run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-    - name: Publish Dotnet
-      run: dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
-    - name: listing dir and files
-      run: |
-        cd app/publish
-        ls
+    # - name: Listing Dotnet version
+    #   run: dotnet --version
+    # - name: Dotnet restore
+    #   run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+    # - name: Building Dotnet
+    #   run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+    # - name: Publish Dotnet
+    #   run: dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
+    # - name: listing dir and files
+    #   run: |
+    #     cd app/publish
+    #     ls
      
   # Docker_Build:
   #  runs-on: ubuntu-latest
