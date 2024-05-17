@@ -13,7 +13,7 @@ jobs:
   #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
   Real_Sonar:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps: 
     - name: Checkout code
       uses: actions/checkout@v4      
