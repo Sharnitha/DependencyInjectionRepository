@@ -9,11 +9,12 @@ on:
     - feature-private
   
 jobs:
-  # Dotnet:
-  #   uses: ./.github/workflows/dotnet_workflow_reuse.yml
+  Dotnet:
+    uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
   Real_Sonar:
     runs-on: self-hosted
+    needs: Dotnet
     steps: 
     - name: Checkout code
       uses: actions/checkout@v4      
