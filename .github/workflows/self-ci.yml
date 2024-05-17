@@ -1,0 +1,135 @@
+# DependencyInjectionExampleSolution
+# /DepedencyInjectionUsingMVC
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - feature-private
+  
+jobs:
+  Dotnet:
+    uses: ./.github/workflows/dotnet_workflow_reuse.yml
+
+  Real_Sonar:
+    runs-on: self-hosted
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4      
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.2.1
+      with:
+        java-version: 17
+        distribution: temurin
+        
+    - name: Verify Java version
+      run: java --version
+      
+    - name: SonarScanner tool installed
+      run: dotnet tool install --global dotnet-sonarscanner
+    - name: Begin SonarQube analysis
+      run: |
+        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
+        dotnet sonarscanner begin /k:"<projectname-(frontend)>" \
+        /d:sonar.login="admin" \
+        /d:sonar.password="<oasworrd>" \
+        /d:sonar.host.url="<url>" \
+        /v:"${{ github.run_number }}" \
+        /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/*.trx" \
+        /d:sonar.cs.vscoveragexml.reportsPaths="${{ github.workspace }}/TestResults/coverage.xml"
+
+    - name: Build project
+      run: |
+        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
+        dotnet build -c release -o app/publish
+        cd app/publish && ls
+        
+    - name: End SonarQube analysis
+      run: |
+        cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC
+        dotnet sonarscanner end /d:sonar.login="admin" /d:sonar.password="<password>"
+
+        
+  # Docker_Build:
+  #   runs-on: self-hosted
+  #   # needs: Docker_Login
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Docker build using Dockerfile
+  #       run: |
+  #         cd DependencyInjectionExampleSolution
+  #         docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+  #         docker images
+      # - name: Aqua Security Trivy
+      #   uses: aquasecurity/trivy-action@0.18.0
+      #   with:   
+      #     exit-code: 0
+      #     severity: MEDIUM,HIGH,CRITICAL
+      #     format: table
+      #     image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+          
+      # - name: Azure CLI
+      #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
+
+      # - name: Docker build using Dockerfile
+      #   run: |
+      #     docker login githubcipractice.azurecr.io -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+        
+      # - uses: Azure/get-keyvault-secrets@v1
+      #   with:
+      #     keyvault: "Sharnikeyvault"
+      #     secrets: 'docker-login, docker-pass'
+      #   id: DemoSecretAction
+        
+      # - name: Docker build using Dockerfile
+      #   run: |
+      #     docker login githubcipractice.azurecr.io -u ${{ steps.DemoSecretAction.outputs.docker-login }} -p ${{ steps.DemoSecretAction.outputs.docker-pass }}
+      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+
+    
+      # - name: Store run ID as an artifact
+      #   uses: actions/upload-artifact@v4.3.1
+      #   with:
+      #     name: run-id
+      #     path: ${{ github.run_id }}
+ 
+  # Docker_Build:
+  #   runs-on: ubuntu-latest
+  #   # needs: Dotnet
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Docker build using Dockerfile
+  #       run: |
+  #         cd DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/
+  #         docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} .
+  #         docker images
+       # gh run download ${{ github.run_id }}
+         
+      # - name: Aqua Security Trivy
+      #   uses: aquasecurity/trivy-action@0.18.0
+      #   with:   
+      #     exit-code: 0
+      #     severity: MEDIUM,HIGH,CRITICAL
+      #     format: table
+      #     image-ref: githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
+          
+      # - name: Azure CLI
+      #   run: az login --service-principal -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} --tenant ${{secrets.AZ_TENANT}}
+        
+      # - uses: Azure/get-keyvault-secrets@v1
+      #   with:
+      #     keyvault: "Sharnikeyvault"
+      #     secrets: 'docker-login, docker-pass'
+      #   id: DemoSecretAction
+        
+      # - name: Docker build using Dockerfile
+      #   run: |
+      #     docker login githubcipractice.azurecr.io -u ${{ steps.DemoSecretAction.outputs.docker-login }} -p ${{ steps.DemoSecretAction.outputs.docker-pass }}
+      #     docker push githubcipractice.azurecr.io/demoenv:${{ github.run_id }}  
+      #     docker history githubcipractice.azurecr.io/demoenv:${{ github.run_id }}
