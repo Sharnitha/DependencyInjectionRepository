@@ -16,6 +16,14 @@ jobs:
     - name: Listing Dotnet version
       run: dotnet --version
 
+  Dotnet_Build:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3 
+    - name: dotnet version
+      run: dotnet --version
+
 
      
   # Docker_Build:
