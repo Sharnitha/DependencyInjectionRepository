@@ -36,7 +36,7 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
   
-    - name: Checking Dotnet version
+    - name: Checking Dotnet version 
       run: dotnet --version
      
     # - name: Dotnet restore
