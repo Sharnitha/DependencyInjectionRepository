@@ -28,13 +28,14 @@ jobs:
 
   Dotnet_buildss:
      runs-on: self-hosted
+     needs: Dotnet_Task
      steps:
         - name: Checkout code
           uses: actions/checkout@v3
-        - name: Setup .NET Core SDK
-          uses: actions/setup-dotnet@v3
-          with:
-            dotnet-version: 3.1.426
+        # - name: Setup .NET Core SDK
+        #   uses: actions/setup-dotnet@v3
+        #   with:
+        #     dotnet-version: 3.1.426
         - name: Dotnet restore
           run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
         - name: Building Dotnet
