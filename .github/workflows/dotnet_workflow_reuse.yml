@@ -22,20 +22,10 @@ jobs:
     - name: dotnet list runtimes
       run: dotnet --list-runtimes
 
-  Dotnet_Build:
-    runs-on: self-hosted
-    needs: Dotnet_Task
-    steps:
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
+    - name: .NET Restore
+      uses: zyactions/dotnet-restore@v1
       with:
-        dotnet-version: 3.1.x
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: dotnet version
-      run: dotnet --version
-
-
+        workspace: DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
      
   # Docker_Build:
   #  runs-on: ubuntu-latest
