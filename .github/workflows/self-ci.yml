@@ -9,7 +9,7 @@ on:
     - feature-private
    
 jobs: 
-  Dotnet:
+  Dotnet: 
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
   # Real_Sonar:
