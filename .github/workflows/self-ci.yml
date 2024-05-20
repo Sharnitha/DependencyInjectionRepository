@@ -8,7 +8,7 @@ on:
     branches:
     - feature-private
   
-jobs:
+jobs: 
   Dotnet:
     uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
