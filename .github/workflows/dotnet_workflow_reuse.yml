@@ -7,6 +7,10 @@ jobs:
   Dotnet_Task:
     runs-on: self-hosted
     steps:
+    - name: Remove Previous Dotnet Version
+      run : |
+         cd /usr/share/dotnet/
+         rm -rf *
     - name: Checkout code
       uses: actions/checkout@v3 
     - name: Setup .NET Core SDK
@@ -14,7 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.x
     - name: Listing Dotnet version
-      run: dotnet --version 
+      run: dotnet --version
+    - name: dotnet list runtimes
+      run: dotnet --list-runtimes
 
   Dotnet_Build:
     runs-on: self-hosted
