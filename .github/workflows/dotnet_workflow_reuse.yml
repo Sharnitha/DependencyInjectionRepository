@@ -1,69 +1,22 @@
-# name: Full_CI
-
-# on:
-#  workflow_call:
-    
-# jobs:
-#   Dotnet_Task:
-#     runs-on: self-hosted
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v3
-#     - name: Setup .NET Core SDK
-#       uses: actions/setup-dotnet@v3
-#       with:
-#         dotnet-version: 3.1.426
-#     - name: Listing Dotnet version
-#       run: dotnet --version
-
-name: Self-Hosted CI
+name: Full_CI
 
 on:
-  workflow_call:
-
-env:  
-  DOTNET_VERSION: '3.1.426' 
-  DOTNET_INSTALL_DIR: "./.dotnet"
-
+ workflow_call:
+    
 jobs:
-  Dotnet_Build:
-    runs-on: self-hosted  
+  Dotnet_Task:
+    runs-on: self-hosted
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v4 
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-  
-    - name: Checking Dotnet version 
+        dotnet-version: 3.1.426
+    - name: Listing Dotnet version
       run: dotnet --version
-     
-    # - name: Dotnet restore
-    #   run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-    # - name: Building Dotnet
-    #   run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-    # - name: Publish Dotnet
-    #   run: dotnet publish DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj -c release -o app/publish
-    # - name: listing dir and files
-    #   run: |
-    #     cd app/publish
-    #     ls
 
-  Dotnet_buildss:
-     runs-on: self-hosted
-     needs: Dotnet_Build
-     steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        # - name: Setup .NET Core SDK
-        #   uses: actions/setup-dotnet@v3
-        #   with:
-        #     dotnet-version: 3.1.426
-        - name: Dotnet restore
-          run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
-        - name: Building Dotnet
-          run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+
      
   # Docker_Build:
   #  runs-on: ubuntu-latest
