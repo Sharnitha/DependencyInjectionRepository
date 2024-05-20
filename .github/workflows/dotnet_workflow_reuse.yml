@@ -13,8 +13,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 3.1.426
-    # - name: Listing Dotnet version
-    #   run: dotnet --version
+    - name: Listing Dotnet version
+      run: dotnet --version
     # - name: Dotnet restore
     #   run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
     # - name: Building Dotnet
@@ -25,6 +25,16 @@ jobs:
     #   run: |
     #     cd app/publish
     #     ls
+
+  Dotnet_buildss:
+     runs-on: self-hosted
+     steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Dotnet restore
+          run: dotnet restore DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
+        - name: Building Dotnet
+          run: dotnet build DependencyInjectionExampleSolution/DepedencyInjectionUsingMVC/DepedencyInjectionUsingMVC.csproj
      
   # Docker_Build:
   #  runs-on: ubuntu-latest
