@@ -23,6 +23,10 @@ jobs:
     runs-on: self-hosted
     needs: Dotnet_Task
     steps:
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
     - name: Checkout code
       uses: actions/checkout@v3 
     - name: dotnet version
