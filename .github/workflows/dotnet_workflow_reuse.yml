@@ -9,11 +9,11 @@ jobs:
     steps:
     
     - name: Checkout code
-      uses: actions/checkout@v3 
-    # - name: Setup .NET Core SDK
-    #   uses: actions/setup-dotnet@v3
-    #   with:
-    #     dotnet-version: 3.1.x
+      uses: actions/checkout@v4
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
     - name: Listing Dotnet version
       run: dotnet --version
     - name: dotnet list runtimes
@@ -23,12 +23,12 @@ jobs:
     runs-on: self-hosted
     needs: Dotnet_Task
     steps:
-    # - name: Setup .NET Core SDK
-    #   uses: actions/setup-dotnet@v3
-    #   with:
-    #     dotnet-version: 3.1.x
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
     - name: Checkout code
-      uses: actions/checkout@v3 
+      uses: actions/checkout@v4
     - name: dotnet version
       run: dotnet --version
 
