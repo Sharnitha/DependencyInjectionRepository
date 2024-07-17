@@ -5,7 +5,7 @@ name: CI
 on:
   workflow_dispatch:
   push: 
-    branches:
+    branches: 
     - feature-private
    
 jobs: 
