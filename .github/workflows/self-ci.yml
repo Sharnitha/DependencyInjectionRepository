@@ -26,7 +26,13 @@ jobs:
       run: dotnet --version
      
     - name: Dotnet build
-      run: docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+      run: docker build -t githubcisharni.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+      
+    - name: Dotnet build
+      run: |
+        az login --service-principal -u c03d7f87-710f-41e6-951e-1b48aebeb8f0 -p ${{ secrets.DOCKER_PASSWORD }} --tenant 406f6fb2-e087-4d29-9642-817873fddc4c
+        docker login githubcisharni.azurecr.io -u c03d7f87-710f-41e6-951e-1b48aebeb8f0 -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push githubcisharni.azurecr.io/demoenv:${{ github.run_id }} 
     
     # uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
