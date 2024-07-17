@@ -9,14 +9,19 @@ on:
     - feature-private
    
 jobs: 
-  Dotnet: 
+  Dotnet_Task:
     runs-on: ubuntu-latest
     steps:
+    - name: Remove Previous Dotnet Version
+      run : |
+        cd /usr/share/dotnet/
+        rm -rf *
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 3.1.x
-        
+        dotnet-version: 3.1.426
     - name: Listing Dotnet version
       run: dotnet --version
      
