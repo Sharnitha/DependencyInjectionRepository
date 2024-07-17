@@ -10,12 +10,25 @@ on:
    
 jobs: 
   Dotnet: 
-    uses: ./.github/workflows/dotnet_workflow_reuse.yml
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
+        
+    - name: Listing Dotnet version
+      run: dotnet --version
+     
+    - name: Dotnet build
+      run: docker build -t githubcipractice.azurecr.io/demoenv:${{ github.run_id }} --file Dockerfile-backend .
+    
+    # uses: ./.github/workflows/dotnet_workflow_reuse.yml
 
-  Real_Sonar:
-    runs-on: self-hosted
-    needs: Dotnet
-    steps: 
+  # Real_Sonar:
+  #   runs-on: self-hosted
+  #   needs: Dotnet
+  #   steps: 
     # - name: Checkout code
     #   uses: actions/checkout@v4      
     # - name: Setup Java JDK
@@ -24,15 +37,15 @@ jobs:
     #     java-version: 17
     #     distribution: temurin
         
-    - name: Verify Java version
-      run: java --version
+    # - name: Verify Java version
+    #   run: java --version
 
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 3.1.426
-    - name: SonarScanner tool installed
-      run: dotnet tool install --global dotnet-sonarscanner
+    # - name: Setup .NET Core SDK
+    #   uses: actions/setup-dotnet@v3
+    #   with:
+    #     dotnet-version: 3.1.426
+    # - name: SonarScanner tool installed
+    #   run: dotnet tool install --global dotnet-sonarscanner
       
   #   - name: Begin SonarQube analysis
   #     run: |
